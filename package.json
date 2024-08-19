@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "guitar-scale-trainer": "file:",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
