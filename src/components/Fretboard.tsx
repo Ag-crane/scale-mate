@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
+const GuitarContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
 const fretboard = [
     ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E"],
     ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A"],
@@ -19,6 +25,13 @@ const FretboardContainer = styled.div`
     margin: 20px auto;
     background-color: #a0522d; // 나무 색상
     border-radius: 10px;
+`;
+
+const OpenNotesContainer = styled.div`
+    display: flex;
+    flex-direction: column-reverse;
+    margin-right: 10px;
+    height: 240px;
 `;
 
 const NoteRow = styled.div`
@@ -50,17 +63,26 @@ const Note = styled.div<{ isOpenNote?: boolean }>`
 
 const Fretboard: React.FC = () => {
     return (
-        <FretboardContainer>
-            {fretboard.map((string, stringIndex) => (
-                <NoteRow key={stringIndex}>
-                    {string.slice(1).map((note, fretIndex) => (
-                        <Note key={fretIndex + 1}>
-                            <div>{note}</div>
-                        </Note>
-                    ))}
-                </NoteRow>
-            ))}
-        </FretboardContainer>
+        <GuitarContainer>
+            <OpenNotesContainer>
+                {fretboard.map((string, stringIndex) => (
+                    <Note key={stringIndex} isOpenNote>
+                        <div>{string[0]}</div>
+                    </Note>
+                ))}
+            </OpenNotesContainer>
+            <FretboardContainer>
+                {fretboard.map((string, stringIndex) => (
+                    <NoteRow key={stringIndex}>
+                        {string.slice(1).map((note, fretIndex) => (
+                            <Note key={fretIndex + 1}>
+                                <div>{note}</div>
+                            </Note>
+                        ))}
+                    </NoteRow>
+                ))}
+            </FretboardContainer>
+        </GuitarContainer>
     );
 };
 
