@@ -23,6 +23,7 @@ const FretboardContainer = styled.div`
     width: 950px;
     height: 240px;
     margin: 20px auto;
+    padding: 10px 0px;
     background-color: #a0522d; // 나무 색상
     border-radius: 10px;
 `;
@@ -48,6 +49,19 @@ const Note = styled.div<{ isOpenNote?: boolean }>`
     color: black;
     font-weight: bold;
     font-size: 12px;
+
+    ${({ isOpenNote }) =>
+        !isOpenNote
+            ? `
+                border-right: 2px solid silver;
+
+                &:last-child {
+                    border-right: none;
+                }
+            `
+            : `
+                border-right: none;
+            `}
 
     & > div {
         background-color: ${({ isOpenNote }) => (isOpenNote ? "#333" : "#fff")};
