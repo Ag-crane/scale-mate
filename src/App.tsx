@@ -3,7 +3,8 @@ import Fretboard from "./components/Fretboard";
 import SettingBoard from "./components/SettingBoard";
 
 const App: React.FC = () => {
-    const scales = ["Chromatic", "C Major", "G Major", "D Minor", "A Minor"];
+    const scales = ["Chromatic", "Major", "Minor", "Major Pentatonic", "Minor Pentatonic"];
+    const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
     return (
         <div className="App">
@@ -13,7 +14,7 @@ const App: React.FC = () => {
             </div>
             <div>
                 <h1>Setting Board</h1>
-                <SettingBoard scales={scales} />
+                <SettingBoard scales={scales} keys={keys} />
             </div>
         </div>
     );

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 interface SettingBoardProps {
     scales: string[];
+    keys: string[];
     defaultBpm?: number;
 }
 
@@ -36,13 +37,19 @@ const Input = styled.input`
 
 const SettingBoard: React.FC<SettingBoardProps> = ({
     scales,
+    keys,
     defaultBpm = 60,
 }) => {
     const [selectedScale, setSelectedScale] = useState<string>(scales[0]);
+    const [selectedKey, setSelectedKey] = useState<string>(keys[0]);
     const [bpm, setBpm] = useState<number>(defaultBpm);
 
     const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedScale(event.target.value);
+    };
+
+    const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedKey(event.target.value);
     };
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +59,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     return (
         <Container>
             <div style={{ marginBottom: "20px" }}>
-                <Label htmlFor="scale">Select Scale : </Label>
+                <Label htmlFor="scale">Scale : </Label>
                 <Select
                     id="scale"
                     value={selectedScale}
@@ -65,7 +72,16 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     ))}
                 </Select>
             </div>
-
+            <div style={{ marginBottom: "20px" }}>
+                <Label htmlFor="key">Key : </Label>
+                <Select id="key" value={selectedKey} onChange={handleKeyChange}>
+                    {keys.map((key, index) => (
+                        <option key={index} value={key}>
+                            {key}
+                        </option>
+                    ))}
+                </Select>
+            </div>
             <div>
                 <Label htmlFor="bpm">BPM : </Label>
                 <Input
