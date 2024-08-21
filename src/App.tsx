@@ -1,6 +1,7 @@
 import React from "react";
 import Fretboard from "./components/Fretboard";
 import SettingBoard from "./components/SettingBoard";
+import ScalePlayer from "./components/ScalePlayer";
 
 const App: React.FC = () => {
     const scales = ["Chromatic", "Major", "Minor", "Major Pentatonic", "Minor Pentatonic"];
@@ -15,6 +16,10 @@ const App: React.FC = () => {
             <div>
                 <h1>Setting Board</h1>
                 <SettingBoard scales={scales} keys={keys} />
+            </div>
+            <div>
+                <h1>Scale Player</h1>
+                <ScalePlayer />
             </div>
         </div>
     );
