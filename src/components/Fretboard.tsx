@@ -24,7 +24,7 @@ const FretboardContainer = styled.div`
     border: 2px solid black;
     width: 950px;
     height: 240px;
-    margin: 20px auto;
+    margin: 20px;
     padding: 10px 0px;
     background-color: #a0522d;
     border-radius: 10px;

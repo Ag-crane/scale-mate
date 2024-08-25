@@ -3,10 +3,25 @@ import React, { useState } from "react";
 import Fretboard from "./Fretboard";
 import * as Tone from "tone";
 import { ChromaticNotes } from "../data/scales/Chromatic";
+import styled from "styled-components";
 
 interface ChromaticPlayerProps {
     bpm: number;
 }
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    `
+const ButtonContainer = styled.div`
+    display: flex;
+    gap: 10px;
+`
+
+const Button = styled.button`
+    padding: 10px 20px;
+    `
 
 const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
     const [currentNote, setCurrentNote] = useState<string | null>(null);
@@ -51,11 +66,13 @@ const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
     };
 
     return (
-        <div>
-            <button onClick={playChromaticScale} disabled={isPlaying}>Play Chromatic Scale</button>
-            <button onClick={stopChromaticScale} disabled={!isPlaying}>Stop</button>
+        <Container>
+            <ButtonContainer>
+                <Button onClick={playChromaticScale} disabled={isPlaying}>Play</Button>
+                <Button onClick={stopChromaticScale} disabled={!isPlaying}>Stop</Button>
+            </ButtonContainer>
             <Fretboard currentNote={currentNote} playedNotesCount={playedNotesCount} />
-        </div>
+        </Container>
     );
 };
 
