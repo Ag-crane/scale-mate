@@ -1,10 +1,12 @@
+// SettingBoard.tsx
 import React, { useState } from "react";
 import styled from "styled-components";
 
 interface SettingBoardProps {
     scales: string[];
     keys: string[];
-    defaultBpm?: number;
+    defaultBpm: number;
+    onBpmChange: (bpm: number) => void; // bpm을 전달할 함수
 }
 
 const Container = styled.div`
@@ -38,7 +40,8 @@ const Input = styled.input`
 const SettingBoard: React.FC<SettingBoardProps> = ({
     scales,
     keys,
-    defaultBpm = 60,
+    defaultBpm,
+    onBpmChange,
 }) => {
     const [selectedScale, setSelectedScale] = useState<string>(scales[0]);
     const [selectedKey, setSelectedKey] = useState<string>(keys[0]);
@@ -53,7 +56,9 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     };
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setBpm(Number(event.target.value));
+        const newBpm = Number(event.target.value);
+        setBpm(newBpm);
+        onBpmChange(newBpm); // 부모 컴포넌트(App)로 bpm 전달
     };
 
     return (

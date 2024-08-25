@@ -62,7 +62,7 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean }>`
         display: flex;
         justify-content: center;
         align-items: center;
-    }
+    } 
 
     border-right: ${({ isOpenNote }) => (isOpenNote ? "none" : "2px solid silver")};
 

@@ -1,17 +1,21 @@
+// ChromaticPlayer.tsx
 import React, { useState } from "react";
 import Fretboard from "./Fretboard";
 import * as Tone from "tone";
 import { ChromaticNotes } from "../data/scales/Chromatic";
 
-const ChromaticPlayer: React.FC = () => {
+interface ChromaticPlayerProps {
+    bpm: number;
+}
+
+const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
     const [currentNote, setCurrentNote] = useState<string | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [playedNotesCount, setPlayedNotesCount] = useState(0); // 노트 개수 카운터
-    const bpm = 120;
+    const [playedNotesCount, setPlayedNotesCount] = useState(0);
 
     const playChromaticScale = async () => {
         setIsPlaying(true);
-        setPlayedNotesCount(0); // 초기화
+        setPlayedNotesCount(0);
         await Tone.start();
         
         const synth = new Tone.Synth().toDestination();
@@ -24,15 +28,14 @@ const ChromaticPlayer: React.FC = () => {
 
         ChromaticNotes.forEach((note, index) => {
             transport.schedule((time) => {
-                setCurrentNote(note); // 현재 재생 중인 노트 설정
-                setPlayedNotesCount((prevCount) => prevCount + 1); // 노트 개수 증가
+                setCurrentNote(note);
+                setPlayedNotesCount((prevCount) => prevCount + 1);
                 synth.triggerAttackRelease(note, "8n", time);
             }, index * Tone.Time("8n").toSeconds());
         });
 
         transport.start();
 
-        // 스케일이 끝난 후 상태 초기화
         transport.scheduleOnce(() => {
             setCurrentNote(null);
             setIsPlaying(false);
