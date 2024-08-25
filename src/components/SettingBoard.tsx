@@ -1,4 +1,3 @@
-// SettingBoard.tsx
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -6,7 +5,7 @@ interface SettingBoardProps {
     scales: string[];
     keys: string[];
     defaultBpm: number;
-    onBpmChange: (bpm: number) => void; // bpm을 전달할 함수
+    onBpmChange: (bpm: number) => void;
 }
 
 const Container = styled.div`
@@ -37,6 +36,21 @@ const Input = styled.input`
     text-align: center;
 `;
 
+const Button = styled.button`
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`;
+
 const SettingBoard: React.FC<SettingBoardProps> = ({
     scales,
     keys,
@@ -56,9 +70,19 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     };
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newBpm = Number(event.target.value);
-        setBpm(newBpm);
-        onBpmChange(newBpm); // 부모 컴포넌트(App)로 bpm 전달
+        let value = event.target.value;
+
+        if (value === "" || Number(value) === 0) {
+            setBpm(0);
+        } else {
+            const newBpm = Number(value);
+            setBpm(newBpm);
+        }
+    };
+
+    const handleSave = () => {
+        // 저장 버튼을 눌렀을 때 현재 BPM을 부모 컴포넌트로 전달
+        onBpmChange(bpm);
     };
 
     return (
@@ -98,6 +122,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     max="240"
                 />
             </div>
+            <Button onClick={handleSave}>Save</Button>
         </Container>
     );
 };
