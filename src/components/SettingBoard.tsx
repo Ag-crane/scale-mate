@@ -43,11 +43,11 @@ const Button = styled.button`
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background-color: rgb(40, 44, 52, 0.5);
     color: white;
 
     &:hover {
-        background-color: #0056b3;
+        background-color: rgb(40, 44, 52, 1);
     }
 `;
 
