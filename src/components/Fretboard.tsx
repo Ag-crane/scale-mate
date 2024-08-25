@@ -53,8 +53,9 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean }>`
     font-size: 12px;
 
     & > div {
-        background-color: ${({ isActive }) => (isActive ? "#ff0" : "#fff")};
-        color: ${({ isActive }) => (isActive ? "#000" : "#333")};
+        background-color: ${({ isActive, isOpenNote }) =>
+            isActive ? "#ff0" : isOpenNote ? "#753c24" : "#fff"};
+        color: ${({ isActive, isOpenNote }) => isActive ? "#000" : isOpenNote ? "#fff" : "#333"};
         border-radius: 50%;
         width: 28px;
         height: 28px;
