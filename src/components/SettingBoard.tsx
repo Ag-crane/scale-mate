@@ -70,7 +70,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     };
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let value = event.target.value;
+        const value = event.target.value;
 
         if (value === "" || Number(value) === 0) {
             setBpm(0);

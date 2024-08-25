@@ -1,4 +1,3 @@
-// ChromaticPlayer.tsx
 import React, { useState } from "react";
 import Fretboard from "./Fretboard";
 import * as Tone from "tone";
