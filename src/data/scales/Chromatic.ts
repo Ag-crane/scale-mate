@@ -1,23 +1,20 @@
 export const ChromaticNotes = [
-    // 6번줄
-    "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3", "C#3", "D3", "D#3", "E3",
-    
-    // 5번줄
-    "A#2", "B2", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A3",
-    
-    // 4번줄
-    "D#3", "E3", "F3", "F#3", "G3", "G#3", "A3", "A#3", "B3", "C4", "C#4", "D4",
-    
-    // 3번줄
-    "G#3", "A3", "A#3", "B3", "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4",
-    
-    // 2번줄
-    "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4",
-    
-    // 1번줄
-    "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", "C5", "C#5", "D5", "D#5", "E5"
+    ["F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3", "C#3", "D3", "D#3", "E3"],
+    ["A#2", "B2", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A3"],
+    ["D#3", "E3", "F3", "F#3", "G3", "G#3", "A3", "A#3", "B3", "C4", "C#4", "D4"],
+    ["G#3", "A3", "A#3", "B3", "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4"],
+    ["C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4"],
+    ["F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", "C5", "C#5", "D5", "D#5", "E5"]
 ];
 
+export const testScaleNotes = [
+    ["F2", null, "G2", null, "A2", null, "B2", null, "C#3", null, "D#3", null],
+    ["A#2", null, "C3", null, "D3", null, "E3", null, "F#3", null, "G#3", null],
+    ["D#3", null, "F3", null, "G3", null, "A3", null, "B3", null, "C#4", null],
+    ["G#3", null, "A#3", null, "C4", null, "D4", null, "E4", null, "F#4", null],
+    ["C4", null, "D4", null, "E4", null, "F#4", null, "G#4", null, "A#4", null],
+    ["F4", null, "G4", null, "A4", null, "B4", null, "C#5", null, "D#5", null]
+]
 
 export const ChromaticNotes_4position = [
     // 1~4프렛 상행
