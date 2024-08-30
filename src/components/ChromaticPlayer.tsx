@@ -23,13 +23,13 @@ const Button = styled.button`
     `
 
 const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
-    const [currentNote, setCurrentNote] = useState<string | null>(null);
+    const [currentPlayingNotes, setcurrentPlayingNotes] = useState<boolean[][]>(
+        Array(6).fill(null).map(() => Array(12).fill(false))
+    );
     const [isPlaying, setIsPlaying] = useState(false);
-    const [playedNotesCount, setPlayedNotesCount] = useState(0);
 
     const playChromaticScale = async () => {
         setIsPlaying(true);
-        setPlayedNotesCount(0);
         await Tone.start();
         
         const synth = new Tone.Synth().toDestination();
@@ -40,27 +40,44 @@ const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
         transport.stop();
         transport.position = 0;
 
-        ChromaticNotes.forEach((note, index) => {
+        // Null이 아닌 노트들만 추출
+        const notesToPlay: { note: string, rowIndex: number, colIndex: number }[] = [];
+        ChromaticNotes.forEach((row, rowIndex) => {
+            row.forEach((note, colIndex) => {
+                if (note) {
+                    notesToPlay.push({ note, rowIndex, colIndex });
+                }
+            });
+        });
+
+        // 추출된 노트들을 연속적으로 스케줄링
+        notesToPlay.forEach((noteObj, index) => {
             transport.schedule((time) => {
-                setCurrentNote(note);
-                setPlayedNotesCount((prevCount) => prevCount + 1);
-                synth.triggerAttackRelease(note, "8n", time);
+                setcurrentPlayingNotes(prev => {
+                    const newPositions = prev.map(row => row.map(() => false));
+                    newPositions[noteObj.rowIndex][noteObj.colIndex] = true;
+                    return newPositions;
+                });
+                synth.triggerAttackRelease(noteObj.note, "8n", time);
             }, index * Tone.Time("8n").toSeconds());
         });
 
         transport.start();
 
+        // 총 Note 수 계산
+        const totalNotes = ChromaticNotes.flat().length;
+        //  재생이 완료된 후 상태 초기화
         transport.scheduleOnce(() => {
-            setCurrentNote(null);
+            setcurrentPlayingNotes(Array(6).fill(null).map(() => Array(12).fill(false)));
             setIsPlaying(false);
-        }, ChromaticNotes.length * Tone.Time("8n").toSeconds());
+        }, totalNotes * Tone.Time("8n").toSeconds() // 재생이 완료될 시간
+        );
     };
 
     const stopChromaticScale = () => {
         const transport = Tone.getTransport();
         transport.stop();
         transport.cancel();
-        setCurrentNote(null);
         setIsPlaying(false);
     };
 
@@ -70,7 +87,7 @@ const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
                 <Button onClick={playChromaticScale} disabled={isPlaying}>Play</Button>
                 <Button onClick={stopChromaticScale} disabled={!isPlaying}>Stop</Button>
             </ButtonContainer>
-            <Fretboard currentNote={currentNote} playedNotesCount={playedNotesCount} />
+            <Fretboard currentPlayingNotes={currentPlayingNotes} />
         </Container>
     );
 };
