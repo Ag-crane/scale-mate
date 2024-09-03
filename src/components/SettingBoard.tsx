@@ -1,12 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-
-interface SettingBoardProps {
-    scales: string[];
-    keys: string[];
-    defaultBpm: number;
-    onBpmChange: (bpm: number) => void;
-}
 
 const Container = styled.div`
     padding: 20px;
@@ -51,38 +44,34 @@ const Button = styled.button`
     }
 `;
 
+interface SettingBoardProps {
+    scales: string[];
+    keys: string[];
+    settings: {
+        bpm: number;
+        scale: string;
+        key: string;
+    };
+    onSettingsChange: (newSettings: Partial<{ bpm: number; scale: string; key: string }>) => void;
+}
+
 const SettingBoard: React.FC<SettingBoardProps> = ({
     scales,
     keys,
-    defaultBpm,
-    onBpmChange,
+    settings,
+    onSettingsChange,
 }) => {
-    const [selectedScale, setSelectedScale] = useState<string>(scales[0]);
-    const [selectedKey, setSelectedKey] = useState<string>(keys[0]);
-    const [bpm, setBpm] = useState<number>(defaultBpm);
-
     const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedScale(event.target.value);
+        onSettingsChange({ scale: event.target.value });
     };
 
     const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedKey(event.target.value);
+        onSettingsChange({ key: event.target.value });
     };
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-
-        if (value === "" || Number(value) === 0) {
-            setBpm(0);
-        } else {
-            const newBpm = Number(value);
-            setBpm(newBpm);
-        }
-    };
-
-    const handleSave = () => {
-        // 저장 버튼을 눌렀을 때 현재 BPM을 부모 컴포넌트로 전달
-        onBpmChange(bpm);
+        onSettingsChange({ bpm: Number(value) || 0 });
     };
 
     return (
@@ -91,7 +80,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                 <Label htmlFor="scale">Scale : </Label>
                 <Select
                     id="scale"
-                    value={selectedScale}
+                    value={settings.scale}
                     onChange={handleScaleChange}
                 >
                     {scales.map((scale, index) => (
@@ -103,7 +92,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
             </div>
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="key">Key : </Label>
-                <Select id="key" value={selectedKey} onChange={handleKeyChange}>
+                <Select id="key" value={settings.key} onChange={handleKeyChange}>
                     {keys.map((key, index) => (
                         <option key={index} value={key}>
                             {key}
@@ -116,15 +105,17 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                 <Input
                     type="number"
                     id="bpm"
-                    value={bpm}
+                    value={settings.bpm}
                     onChange={handleBpmChange}
                     min="40"
                     max="240"
                 />
             </div>
-            <Button onClick={handleSave}>Save</Button>
+            <Button onClick={() => onSettingsChange(settings)}>Save</Button>
         </Container>
     );
 };
+
+
 
 export default SettingBoard;
