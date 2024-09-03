@@ -54,19 +54,37 @@ const App: React.FC = () => {
     const scales = ["Chromatic", "Major", "Minor", "Major Pentatonic", "Minor Pentatonic"];
     const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-    const [bpm, setBpm] = useState<number>(120);
+    const [settings, setSettings] = useState({
+        bpm: 120,
+        scale: scales[0],
+        key: keys[0],
+    });
+
+    const handleSettingsChange = (newSettings: Partial<typeof settings>) => {
+        setSettings((prevSettings) => ({
+            ...prevSettings,
+            ...newSettings,
+        }));
+    };
 
     return (
         <Container>
             <Header>Scale Mate</Header>
             <SettingBoardContainer>
-                <SettingBoard scales={scales} keys={keys} defaultBpm={bpm} onBpmChange={setBpm} />
+                <SettingBoard
+                    scales={scales}
+                    keys={keys}
+                    settings={settings}
+                    onSettingsChange={handleSettingsChange}
+                />
             </SettingBoardContainer>
             <ChromaticPlayerContainer>
-                <ChromaticPlayer bpm={bpm} />
+                <ChromaticPlayer bpm={settings.bpm} />
             </ChromaticPlayerContainer>
         </Container>
     );
 };
+
+
 
 export default App;
