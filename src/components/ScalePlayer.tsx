@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Fretboard from "./Fretboard";
 import * as Tone from "tone";
-import { ScaleNotesMap } from "../data/scales/Chromatic";
+import { ScaleNotesMap } from "../data/Scales";
 import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
 
 interface ScalePlayerProps {
