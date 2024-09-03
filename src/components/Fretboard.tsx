@@ -11,16 +11,16 @@ const Fretboard: React.FC<FretboardProps> = ({currentPlayingNotes }) => {
     return (
         <GuitarContainer>
             <OpenNotesContainer>
-                {openNotes.map((note, index) => (
+                {openNotes.map((note: string, index: number) => (
                     <Note key={index} isOpenNote>
                         <div>{note.replace(/[0-9]/g, '')}</div>
                     </Note>
                 ))}
             </OpenNotesContainer>
             <FretboardContainer>
-                {fretboard.map((row, rowIndex) => (
+                {fretboard.map((row: string[], rowIndex: number) => (
                     <NoteRow key={rowIndex}>
-                        {row.map((note, colIndex) => (
+                        {row.map((note: string, colIndex: number) => (
                             <Note key={colIndex + 1}  isActive={currentPlayingNotes[rowIndex][colIndex]}>
                                 <div>{note.replace(/[0-9]/g, '')}</div>
                             </Note>
