@@ -2,25 +2,11 @@ import React, { useState } from "react";
 import Fretboard from "./Fretboard";
 import * as Tone from "tone";
 import { ChromaticNotes } from "../data/scales/Chromatic";
-import styled from "styled-components";
+import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
 
 interface ScalePlayerProps {
     bpm: number;
 }
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `
-const ButtonContainer = styled.div`
-    display: flex;
-    gap: 10px;
-`
-
-const Button = styled.button`
-    padding: 10px 20px;
-    `
 
 const ScalePlayer: React.FC<ScalePlayerProps> = ({ bpm }) => {
     const [currentPlayingNotes, setcurrentPlayingNotes] = useState<boolean[][]>(
