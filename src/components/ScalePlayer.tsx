@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import Fretboard from "./Fretboard";
 import * as Tone from "tone";
-import { ChromaticNotes } from "../data/scales/Chromatic";
+import { ScaleNotesMap } from "../data/scales/Chromatic";
 import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
 
 interface ScalePlayerProps {
-    bpm: number;
+    settings: {
+        bpm: number;
+        scale: string;
+        key: string;
+    };
 }
 
-const ScalePlayer: React.FC<ScalePlayerProps> = ({ bpm }) => {
+const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
     const [currentPlayingNotes, setcurrentPlayingNotes] = useState<boolean[][]>(
         Array(6).fill(null).map(() => Array(12).fill(false))
     );
@@ -20,15 +24,18 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ bpm }) => {
         
         const synth = new Tone.Synth().toDestination();
         const transport = Tone.getTransport();
-        transport.bpm.value = bpm;
+        transport.bpm.value = settings.bpm;
 
         transport.cancel();
         transport.stop();
         transport.position = 0;
 
+        // 설정된 스케일에 해당하는 노트 가져오기
+        const notes = ScaleNotesMap[settings.scale] || [];
+
         // Null이 아닌 노트들만 추출
         const notesToPlay: { note: string, rowIndex: number, colIndex: number }[] = [];
-        ChromaticNotes.forEach((row, rowIndex) => {
+        notes.forEach((row, rowIndex) => {
             row.forEach((note, colIndex) => {
                 if (note) {
                     notesToPlay.push({ note, rowIndex, colIndex });
@@ -51,7 +58,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ bpm }) => {
         transport.start();
 
         // 총 Note 수 계산
-        const totalNotes = ChromaticNotes.flat().length;
+        const totalNotes = notesToPlay.flat().length;
         //  재생이 완료된 후 상태 초기화
         transport.scheduleOnce(() => {
             setcurrentPlayingNotes(Array(6).fill(null).map(() => Array(12).fill(false)));

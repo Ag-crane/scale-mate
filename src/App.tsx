@@ -27,7 +27,7 @@ const App: React.FC = () => {
                 />
             </SettingBoardContainer>
             <ScalePlayerContainer>
-                <ScalePlayer bpm={settings.bpm} />
+                <ScalePlayer settings={settings} />
             </ScalePlayerContainer>
         </Container>
     );
