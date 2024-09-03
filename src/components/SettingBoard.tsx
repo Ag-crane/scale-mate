@@ -37,7 +37,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     value={settings.scale}
                     onChange={handleScaleChange}
                 >
-                    {scales.map((scale, index) => (
+                    {scales.map((scale: string, index: number) => (
                         <option key={index} value={scale}>
                             {scale}
                         </option>
@@ -47,7 +47,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="key">Key : </Label>
                 <Select id="key" value={settings.key} onChange={handleKeyChange}>
-                    {keys.map((key, index) => (
+                    {keys.map((key: string, index: number) => (
                         <option key={index} value={key}>
                             {key}
                         </option>
