@@ -1,5 +1,5 @@
 import React from "react";
-import { keys, scales } from "../data/TempConstants";
+import { keys, scales } from "../data/Constants";
 import { Button, Container, Input, Label, Select } from "./SettingBoard.styles";
 
 interface SettingBoardProps {
