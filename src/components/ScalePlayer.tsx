@@ -4,7 +4,7 @@ import * as Tone from "tone";
 import { ChromaticNotes } from "../data/scales/Chromatic";
 import styled from "styled-components";
 
-interface ChromaticPlayerProps {
+interface ScalePlayerProps {
     bpm: number;
 }
 
@@ -22,7 +22,7 @@ const Button = styled.button`
     padding: 10px 20px;
     `
 
-const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
+const ScalePlayer: React.FC<ScalePlayerProps> = ({ bpm }) => {
     const [currentPlayingNotes, setcurrentPlayingNotes] = useState<boolean[][]>(
         Array(6).fill(null).map(() => Array(12).fill(false))
     );
@@ -92,4 +92,4 @@ const ChromaticPlayer: React.FC<ChromaticPlayerProps> = ({ bpm }) => {
     );
 };
 
-export default ChromaticPlayer;
+export default ScalePlayer;

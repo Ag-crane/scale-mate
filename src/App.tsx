@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SettingBoard from "./components/SettingBoard";
-import ChromaticPlayer from "./components/ChromaticPlayer";
+import ScalePlayer from "./components/ScalePlayer";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -24,7 +24,7 @@ const SettingBoardContainer = styled.div`
     padding: 20px;
 `;
 
-const ChromaticPlayerContainer = styled.div`
+const ScalePlayerContainer = styled.div`
     margin-top: 20px;
     width: 100%;
     max-width: 1200px;
@@ -78,9 +78,9 @@ const App: React.FC = () => {
                     onSettingsChange={handleSettingsChange}
                 />
             </SettingBoardContainer>
-            <ChromaticPlayerContainer>
-                <ChromaticPlayer bpm={settings.bpm} />
-            </ChromaticPlayerContainer>
+            <ScalePlayerContainer>
+                <ScalePlayer bpm={settings.bpm} />
+            </ScalePlayerContainer>
         </Container>
     );
 };
