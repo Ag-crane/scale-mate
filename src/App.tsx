@@ -51,13 +51,10 @@ const Header = styled.div`
 `;
 
 const App: React.FC = () => {
-    const scales = ["Chromatic", "Major", "Minor", "Major Pentatonic", "Minor Pentatonic"];
-    const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-
     const [settings, setSettings] = useState({
-        bpm: 120,
-        scale: scales[0],
-        key: keys[0],
+        bpm: 60,
+        scale: 'Chromatic',
+        key: 'C',
     });
 
     const handleSettingsChange = (newSettings: Partial<typeof settings>) => {
@@ -72,8 +69,6 @@ const App: React.FC = () => {
             <Header>Scale Mate</Header>
             <SettingBoardContainer>
                 <SettingBoard
-                    scales={scales}
-                    keys={keys}
                     settings={settings}
                     onSettingsChange={handleSettingsChange}
                 />

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { keys, scales } from "../data/constants";
 
 const Container = styled.div`
     padding: 20px;
@@ -45,8 +46,6 @@ const Button = styled.button`
 `;
 
 interface SettingBoardProps {
-    scales: string[];
-    keys: string[];
     settings: {
         bpm: number;
         scale: string;
@@ -56,8 +55,6 @@ interface SettingBoardProps {
 }
 
 const SettingBoard: React.FC<SettingBoardProps> = ({
-    scales,
-    keys,
     settings,
     onSettingsChange,
 }) => {
