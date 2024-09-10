@@ -1,96 +1,45 @@
-const ChromaticNotes = [
-    ["F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3", "C#3", "D3", "D#3", "E3"],
-    ["A#2", "B2", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A3"],
-    ["D#3", "E3", "F3", "F#3", "G3", "G#3", "A3", "A#3", "B3", "C4", "C#4", "D4"],
-    ["G#3", "A3", "A#3", "B3", "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4"],
-    ["C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4"],
-    ["F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", "C5", "C#5", "D5", "D#5", "E5"]
-];
+import { fretboard } from "./Constants";
 
-const testScaleNotes = [
-    ["F2", null, "G2", null, "A2", null, "B2", null, "C#3", null, "D#3", null],
-    ["A#2", null, "C3", null, "D3", null, "E3", null, "F#3", null, "G#3", null],
-    ["D#3", null, "F3", null, "G3", null, "A3", null, "B3", null, "C#4", null],
-    ["G#3", null, "A#3", null, "C4", null, "D4", null, "E4", null, "F#4", null],
-    ["C4", null, "D4", null, "E4", null, "F#4", null, "G#4", null, "A#4", null],
-    ["F4", null, "G4", null, "A4", null, "B4", null, "C#5", null, "D#5", null]
-]
-
-export const ScaleNotesMap: Record<string, (string | null)[][]> = {
-    Chromatic: ChromaticNotes,
-    Test: testScaleNotes,
+// 스케일 패턴 정의
+const scalePatterns: Record<string, number[]> = {
+    Chromatic: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 크로매틱 스케일 패턴
+    Major: [2, 2, 1, 2, 2, 2, 1], // 전형적인 Major 스케일 패턴 (W-W-H-W-W-W-H)
+    Minor: [2, 1, 2, 2, 1, 2, 2], // 전형적인 Minor 스케일 패턴
+    // 다른 스케일도 추가 가능
 };
 
-// const ChromaticNotes_4position = [
-//     // 1~4프렛 상행
-//     "F2", "F#2", "G2", "G#2",
-//     "A#2", "B2", "C3", "C#3",
-//     "D#3", "E3", "F3", "F#3",
-//     "G#3", "A3", "A#3", "B3",
-//     "C4", "C#4", "D4", "D#4",
-//     "F4", "F#4", "G4", "G#4",
+// 특정 키의 루트에서 스케일을 생성하는 함수
+const generateScaleNotes = (root: string, pattern: number[]): string[] => {
+    const chromaticScale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]; // 크로매틱 스케일
+    let startIndex = chromaticScale.indexOf(root);
+    const notes: string[] = [];
 
-//     // 2~5프렛 하행
-//     "A4", "G#4", "G4", "F#4",
-//     "F4", "E4", "D#4", "D4",
-//     "C4", "B3", "A#3", "A3",
-//     "G3", "F#3", "F3", "E3",
-//     "D3", "C#3", "C3", "B2",
-//     "A2", "G#2", "G2", "F#2",
+    pattern.forEach(interval => {
+        notes.push(chromaticScale[startIndex]);
+        startIndex = (startIndex + interval) % chromaticScale.length;
+    });
 
-//     // 3~6프렛 상행
-//     "G2", "G#2", "A2", "A#2",
-//     "C3", "C#3", "D3", "D#3",
-//     "F3", "F#3", "G3", "G#3",
-//     "A#3", "B3", "C4", "C#4",
-//     "D4", "D#4", "E4", "F4",
-//     "G4", "G#4", "A4", "A#4",
+    return notes;
+};
 
-//     // 4~7프렛 하행
-//     "B4", "A#4", "A4", "G#4",
-//     "F#4", "F4", "E4", "D#4",
-//     "D4", "C#4", "C4", "B3",
-//     "A3", "G#3", "G3", "F#3",
-//     "E3", "D#3", "D3", "C#3",
-//     "B2", "A#2", "A2", "G#2",
+// 특정 스케일을 프렛보드에 맞춰서 변환하는 함수
+const filterFretboardForScale = (fretboard: string[][], scaleNotes: string[]): (string | null)[][] => {
+    return fretboard.map(string => 
+        string.map(note => {
+            const noteWithoutOctave = note.slice(0, -1); // 노트에서 옥타브 제거 (예: "C3" -> "C")
+            return scaleNotes.includes(noteWithoutOctave) ? note : null;
+        })
+    );
+};
 
-//     // 5~8프렛 상행
-//     "A2", "A#2", "B2", "C3",
-//     "D3", "D#3", "E3", "F3",
-//     "G3", "G#3", "A3", "A#3",
-//     "C4", "C#4", "D4", "D#4",
-//     "E4", "F4", "F#4", "G4",
-//     "A4", "A#4", "B4", "C5",
+// 설정에 따라 스케일을 생성하고, 결과물(프렛보드 형식의 노트 배열)을 반환하는 함수
+export const getScaleNotesForSettings = (scale: string, key: string): (string | null)[][] => {
 
-//     // 6~9프렛 하행
-//     "C#5", "C5", "B4", "A#4",
-//     "G#4", "G4", "F#4", "F4",
-//     "E4", "D#4", "D4", "C#4",
-//     "B3", "A#3", "A3", "G#3",
-//     "F#3", "F3", "E3", "D#3",
-//     "C#3", "C3", "B2", "A#2",
+    const scalePattern = scalePatterns[scale];
+    if (scalePattern) {
+        const scaleNotes = generateScaleNotes(key, scalePattern);
+        return filterFretboardForScale(fretboard, scaleNotes);
+    }
 
-//     // 7~10프렛 상행
-//     "B2", "C3", "C#3", "D3",
-//     "E3", "F3", "F#3", "G3",
-//     "A3", "A#3", "B3", "C4",
-//     "D4", "D#4", "E4", "F4",
-//     "F#4", "G4", "G#4", "A4",
-//     "B4", "C5", "C#5", "D5",
-
-//     // 8~11프렛 하행
-//     "D#5", "D5", "C#5", "C5",
-//     "A#4", "A4", "G#4", "G4",
-//     "F#4", "F4", "E4", "D#4",
-//     "C#4", "C4", "B3", "A#3",
-//     "G#3", "G3", "F#3", "F3",
-//     "D#3", "D3", "C#3", "C3",
-
-//     // 9~12프렛 상행
-//     "C#3", "D3", "D#3", "E3",
-//     "F#3", "G3", "G#3", "A3",
-//     "B3", "C4", "C#4", "D4",
-//     "E4", "F4", "F#4", "G4",
-//     "G#4", "A4", "A#4", "B4",
-//     "C#5", "D5", "D#5", "E5"
-// ];
+    return []; // 유효한 스케일이 없을 때 빈 배열 반환
+};
