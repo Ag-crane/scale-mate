@@ -1,4 +1,4 @@
-const scales = ["Chromatic","Test", "Major", "Minor", "Major Pentatonic", "Minor Pentatonic"];
+const scales = ["Chromatic","Test", "Major", "Minor", "MajorPentatonic", "MinorPentatonic"];
 
 const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 

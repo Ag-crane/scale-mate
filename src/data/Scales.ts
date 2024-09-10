@@ -2,10 +2,11 @@ import { fretboard } from "./Constants";
 
 // 스케일 패턴 정의
 const scalePatterns: Record<string, number[]> = {
-    Chromatic: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 크로매틱 스케일 패턴
-    Major: [2, 2, 1, 2, 2, 2, 1], // 전형적인 Major 스케일 패턴 (W-W-H-W-W-W-H)
-    Minor: [2, 1, 2, 2, 1, 2, 2], // 전형적인 Minor 스케일 패턴
-    // 다른 스케일도 추가 가능
+    Chromatic: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 반음계
+    Major: [2, 2, 1, 2, 2, 2, 1], // (W-W-H-W-W-W-H)
+    Minor: [2, 1, 2, 2, 1, 2, 2], // (W-H-W-W-H-W-W)
+    MajorPentatonic: [2, 2, 3, 2, 3], // (W-W-m3-W-m3)
+    MinorPentatonic: [3, 2, 2, 3, 2], // (m3-W-W-m3-W)
 };
 
 // 특정 키의 루트에서 스케일을 생성하는 함수
