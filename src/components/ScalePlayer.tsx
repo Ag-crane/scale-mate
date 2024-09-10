@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Fretboard from "./Fretboard";
 import * as Tone from "tone";
-import { ScaleNotesMap } from "../data/Scales";
 import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
+import { getScaleNotesForSettings } from "../data/Scales";
 
 interface ScalePlayerProps {
     settings: {
@@ -30,8 +30,8 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
         transport.stop();
         transport.position = 0;
 
-        // 설정된 스케일에 해당하는 노트 가져오기
-        const notes = ScaleNotesMap[settings.scale] || [];
+        // Scales.ts에서 설정된 스케일과 키로 필터링된 노트 가져오기
+        const notes = getScaleNotesForSettings(settings.scale, settings.key);
 
         // Null이 아닌 노트들만 추출
         const notesToPlay: { note: string, rowIndex: number, colIndex: number }[] = [];
