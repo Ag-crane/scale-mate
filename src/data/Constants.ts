@@ -1,4 +1,4 @@
-const scales = ["Chromatic","Test", "Major", "Minor", "MajorPentatonic", "MinorPentatonic"];
+const scales = ["Chromatic", "Major", "Minor", "MajorPentatonic", "MinorPentatonic"];
 
 const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
@@ -13,4 +13,13 @@ const fretboard = [
 
 const openNotes = ["E2", "A2", "D3", "G3", "B3", "E4"];
 
-export { scales, keys, fretboard, openNotes };
+const scaleBlockRanges: Record<string, [number, number][]> = {
+    Chromatic: [
+        [1, 4], [2, 5], [3, 6], [4, 7], [5, 8], [6, 9], [7, 10], [8, 11], [9, 12]
+    ],
+    Major: [
+        [2, 6], [4, 8], [7, 10]
+    ],
+};
+
+export { scales, keys, fretboard, openNotes , scaleBlockRanges};
