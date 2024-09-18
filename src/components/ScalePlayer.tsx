@@ -39,7 +39,17 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
             settings.key
         );
         // 2. 스케일별 블록 범위를 가져오기
-        const blockRanges = scaleBlockRanges[settings.scale];
+        const blockRangesEntry = scaleBlockRanges[settings.scale];
+
+        let blockRanges: [number, number][] = [];
+
+        if (Array.isArray(blockRangesEntry)) {
+            // Chromatic
+            blockRanges = blockRangesEntry as [number, number][];
+        } else {
+            // 나머지 스케일
+            blockRanges = (blockRangesEntry as Record<string, [number, number][]>)[settings.key];
+        }        
         
         // 3. 지정된 범위에 따라 블록을 나누기
         const blocks = getScaleBlocks(scaleFretboard, blockRanges)
