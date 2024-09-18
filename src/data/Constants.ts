@@ -13,13 +13,18 @@ const fretboard = [
 
 const openNotes = ["E2", "A2", "D3", "G3", "B3", "E4"];
 
-const scaleBlockRanges: Record<string, [number, number][]> = {
+type ScaleBlockRangesEntry = [number, number][] | Record<string, [number, number][]>;
+
+const scaleBlockRanges: Record<string, ScaleBlockRangesEntry> = {
     Chromatic: [
         [1, 4], [2, 5], [3, 6], [4, 7], [5, 8], [6, 9], [7, 10], [8, 11], [9, 12]
     ],
-    Major: [
-        [2, 6], [4, 8], [7, 10]
-    ],
+    Major: {
+        C: [
+            [2, 6], [4, 8], [7, 10], [9, 13], [12, 15]
+        ],
+        // 나머지 키 추가 예정
+    },
 };
 
 export { scales, keys, fretboard, openNotes , scaleBlockRanges};
