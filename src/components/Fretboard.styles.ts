@@ -30,7 +30,7 @@ const NoteRow = styled.div`
     height: 40px;
 `;
 
-const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean }>`
+const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?: boolean }>`
     flex: 1;
     display: flex;
     justify-content: center;
@@ -43,14 +43,16 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean }>`
     & > div {
         background-color: ${({ isActive, isOpenNote }) =>
             isActive ? "#ff0" : isOpenNote ? "#753c24" : "#fff"};
-        color: ${({ isActive, isOpenNote }) => isActive ? "#000" : isOpenNote ? "#fff" : "#333"};
+        color: ${({ isActive, isOpenNote }) =>
+            isActive ? "#000" : isOpenNote ? "#fff" : "#333"};
         border-radius: 50%;
         width: 28px;
         height: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
-    } 
+        opacity: ${({ isScaleNote }) => (isScaleNote ? 1 : 0.3)};
+    }
 
     border-right: ${({ isOpenNote }) => (isOpenNote ? "none" : "2px solid silver")};
 
@@ -58,5 +60,6 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean }>`
         border-right: none;
     }
 `;
+
 
 export { GuitarContainer, FretboardContainer, OpenNotesContainer, NoteRow, Note };

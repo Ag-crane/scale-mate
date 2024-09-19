@@ -112,7 +112,10 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
                     Stop
                 </Button>
             </ButtonContainer>
-            <Fretboard currentPlayingNotes={currentPlayingNotes} />
+            <Fretboard 
+                currentPlayingNotes={currentPlayingNotes}
+                scaleNotes={getScaleNotesForSettings(settings.scale, settings.key)}
+            />
         </Container>
     );
 };
