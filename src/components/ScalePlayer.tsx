@@ -24,7 +24,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
     const playScale = async () => {
         setIsPlaying(true);
         await Tone.start();
-
+ 
         const synth = new Tone.Synth().toDestination();
         const transport = Tone.getTransport();
         transport.bpm.value = settings.bpm;
@@ -44,33 +44,33 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
         let blockRanges: [number, number][] = [];
 
         if (Array.isArray(blockRangesEntry)) {
-            // Chromatic
-            blockRanges = blockRangesEntry as [number, number][];
+            blockRanges = blockRangesEntry as [number, number][]; // Chromatic
         } else {
-            // 나머지 스케일
-            blockRanges = (blockRangesEntry as Record<string, [number, number][]>)[settings.key];
+            blockRanges = (blockRangesEntry as Record<string, [number, number][]>)[settings.key]; // 나머지 스케일
         }        
         
         // 3. 지정된 범위에 따라 블록을 나누기
         const blocks = getScaleBlocks(scaleFretboard, blockRanges)
 
         // 4. Null이 아닌 노트들만 추출 (재생할 노트 목록 생성)
-        const notesToPlay: {
-            note: string;
-            rowIndex: number;
-            colIndex: number;
-        }[] = [];
+        const notesToPlay: { note: string, rowIndex: number, colIndex: number }[] = [];
         blocks.forEach((block) => {
+            const currentBlockNotes: { note: string, rowIndex: number, colIndex: number }[] = [];
+        
             block.forEach((row, rowIndex) => {
                 row.forEach((note, colIndex) => {
                     if (note) {
-                        notesToPlay.push({ note, rowIndex, colIndex });
+                        currentBlockNotes.push({ note, rowIndex, colIndex });
                     }
                 });
             });
-        });
 
-        // 4. 추출된 노트들을 연속적으로 스케줄링하고 재생 중인 노트를 추적
+            notesToPlay.push(...currentBlockNotes); // 상행
+            notesToPlay.push(...currentBlockNotes.slice().reverse()); // 하행
+        });
+        
+
+        // 5. 추출된 노트들을 연속적으로 스케줄링하고 재생 중인 노트를 추적
         notesToPlay.forEach((noteObj, index) => {
             transport.schedule((time) => {
                 setCurrentPlayingNotes((prev) => {
@@ -87,15 +87,12 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
 
         transport.start();
 
-        const totalBlocks = blocks.length * 2; // 하행/상행 포함
+        // 6. 총 노트 수 계산 후 재생 완료 시 상태 초기화
+        const totalNotes = notesToPlay.length;
         transport.scheduleOnce(() => {
-            setCurrentPlayingNotes(
-                Array(6)
-                    .fill(null)
-                    .map(() => Array(12).fill(false))
-            );
+            setCurrentPlayingNotes(Array(6).fill(null).map(() => Array(12).fill(false)));
             setIsPlaying(false);
-        }, totalBlocks * Tone.Time("8n").toSeconds());
+        }, totalNotes * Tone.Time("8n").toSeconds());
     };
 
     const stopScale = () => {
