@@ -41,8 +41,8 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?
     font-size: 12px;
 
     & > div {
-        background-color: ${({ isActive, isOpenNote }) =>
-            isActive ? "#ff0" : isOpenNote ? "#753c24" : "#fff"};
+        background-color: ${({ isActive, isOpenNote, isScaleNote }) =>
+            isActive ? "#ff0" : isOpenNote ? "#753c24" : isScaleNote ? "#fff" : "#eee"}; 
         color: ${({ isActive, isOpenNote }) =>
             isActive ? "#000" : isOpenNote ? "#fff" : "#333"};
         border-radius: 50%;
@@ -51,7 +51,7 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?
         display: flex;
         justify-content: center;
         align-items: center;
-        opacity: ${({ isScaleNote }) => (isScaleNote ? 1 : 0.3)};
+        opacity: ${({ isScaleNote, isOpenNote }) => isOpenNote ? 1 : (isScaleNote ? 1 : 0.3)}; // 스케일에 속하지 않는 노트는 약하게 표시, OpenNotes는 제외
     }
 
     border-right: ${({ isOpenNote }) => (isOpenNote ? "none" : "2px solid silver")};
@@ -60,6 +60,5 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?
         border-right: none;
     }
 `;
-
 
 export { GuitarContainer, FretboardContainer, OpenNotesContainer, NoteRow, Note };
