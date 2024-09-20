@@ -30,7 +30,7 @@ const NoteRow = styled.div`
     height: 40px;
 `;
 
-const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?: boolean }>`
+const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?: boolean; isRootNote?: boolean }>`
     flex: 1;
     display: flex;
     justify-content: center;
@@ -41,17 +41,17 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?
     font-size: 12px;
 
     & > div {
-        background-color: ${({ isActive, isOpenNote, isScaleNote }) =>
-            isActive ? "#ff0" : isOpenNote ? "#753c24" : isScaleNote ? "#fff" : "#eee"}; 
-        color: ${({ isActive, isOpenNote }) =>
-            isActive ? "#000" : isOpenNote ? "#fff" : "#333"};
+        background-color: ${({ isActive, isOpenNote, isScaleNote, isRootNote }) =>
+            isActive ? "#ff0" : isOpenNote ? "#753c24" : isRootNote ? "#ff6347" : isScaleNote ? "#fff" : "#eee"}; 
+        color: ${({ isActive, isOpenNote, isRootNote }) =>
+            isActive ? "#000" : isOpenNote ? "#fff" : isRootNote ? "#fff" : "#333"};
         border-radius: 50%;
         width: 28px;
         height: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
-        opacity: ${({ isScaleNote, isOpenNote }) => isOpenNote ? 1 : (isScaleNote ? 1 : 0.3)}; // 스케일에 속하지 않는 노트는 약하게 표시, OpenNotes는 제외
+        opacity: ${({ isScaleNote, isOpenNote }) => isOpenNote ? 1 : (isScaleNote ? 1 : 0.3)}; // 스케일에 속하지 않는 노트는 약하게 표시
     }
 
     border-right: ${({ isOpenNote }) => (isOpenNote ? "none" : "2px solid silver")};
