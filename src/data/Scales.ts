@@ -12,7 +12,7 @@ const scalePatterns: Record<string, number[]> = {
 // 특정 키의 루트에서 스케일을 생성하는 함수
 const generateScaleNotes = (root: string, pattern: number[]): string[] => {
     const chromaticScale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-    let startIndex = chromaticScale.indexOf(root);
+    let startIndex = chromaticScale.indexOf(root || "C");
     const notes: string[] = [];
 
     pattern.forEach(interval => {
