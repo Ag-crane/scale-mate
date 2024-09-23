@@ -11,11 +11,13 @@ interface SettingBoardProps {
     onSettingsChange: (
         newSettings: Partial<{ bpm: number; scale: string; key: string }>
     ) => void;
+    onSave: () => void;
 }
 
 const SettingBoard: React.FC<SettingBoardProps> = ({
     settings,
     onSettingsChange,
+    onSave, // Save 버튼 클릭 시 호출되는 함수
 }) => {
     const [tempSettings, setTempSettings] = useState(settings); // 임시 상태로 초기화
 
@@ -38,7 +40,8 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     };
 
     const handleSave = () => {
-        onSettingsChange(tempSettings); // Save 버튼 클릭 시 변경 사항을 반영
+        onSettingsChange(tempSettings); // Save 버튼을 눌렀을 때 설정 변경 사항 반영
+        onSave(); // 재생 중이던 노트를 초기화하는 함수 호출
     };
 
     return (
