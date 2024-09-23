@@ -8,7 +8,9 @@ interface SettingBoardProps {
         scale: string;
         key: string;
     };
-    onSettingsChange: (newSettings: Partial<{ bpm: number; scale: string; key: string }>) => void;
+    onSettingsChange: (
+        newSettings: Partial<{ bpm: number; scale: string; key: string }>
+    ) => void;
 }
 
 const SettingBoard: React.FC<SettingBoardProps> = ({
@@ -16,7 +18,13 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     onSettingsChange,
 }) => {
     const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSettingsChange({ scale: event.target.value });
+        const selectedScale = event.target.value;
+        onSettingsChange({ scale: selectedScale });
+
+        // Chromatic 선택 시 key를 빈 문자열로 설정
+        if (selectedScale === "Chromatic") {
+            onSettingsChange({ key: "" });
+        }
     };
 
     const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,7 +54,12 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
             </div>
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="key">Key : </Label>
-                <Select id="key" value={settings.key} onChange={handleKeyChange}>
+                <Select
+                    id="key"
+                    value={settings.key}
+                    onChange={handleKeyChange}
+                    disabled={settings.scale === "Chromatic"}
+                >
                     {keys.map((key: string, index: number) => (
                         <option key={index} value={key}>
                             {key}
@@ -69,7 +82,5 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
         </Container>
     );
 };
-
-
 
 export default SettingBoard;

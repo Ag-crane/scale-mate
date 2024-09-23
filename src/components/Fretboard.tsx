@@ -25,8 +25,8 @@ const Fretboard: React.FC<FretboardProps> = ({currentPlayingNotes, scaleNotes, r
                         {row.map((note: string, colIndex: number) => {
                             const isActive = currentPlayingNotes[rowIndex][colIndex]; // 현재 재생 중인 노트
                             const isScaleNote = !!scaleNotes[rowIndex][colIndex];    // 스케일에 속하는 노트
-                            const isRootNote = scaleNotes[rowIndex][colIndex]?.startsWith(rootNote); // 으뜸음 확인
-
+                            const isRootNote = rootNote !== '' && !!(scaleNotes[rowIndex][colIndex]?.startsWith(rootNote)); // rootNote가 빈 문자열인 경우 처리
+                            
                             return (
                                 <Note 
                                     key={colIndex + 1}  
