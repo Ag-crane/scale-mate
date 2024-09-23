@@ -1,6 +1,6 @@
 const scales = ["Chromatic", "Major", "Minor", "MajorPentatonic", "MinorPentatonic"];
 
-const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const keys = ['-', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 const fretboard = [
     ["F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3"], // 6번 줄
