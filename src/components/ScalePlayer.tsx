@@ -11,14 +11,16 @@ interface ScalePlayerProps {
         scale: string;
         key: string;
     };
+    currentPlayingNotes: boolean[][];
+    setCurrentPlayingNotes: React.Dispatch<React.SetStateAction<boolean[][]>>;
 }
 
-const ScalePlayer: React.FC<ScalePlayerProps> = ({ settings }) => {
-    const [currentPlayingNotes, setCurrentPlayingNotes] = useState<boolean[][]>(
-        Array(6)
-            .fill(null)
-            .map(() => Array(12).fill(false))
-    );
+const ScalePlayer: React.FC<ScalePlayerProps> = ({
+    settings,
+    currentPlayingNotes,
+    setCurrentPlayingNotes
+}) => {
+
     const [isPlaying, setIsPlaying] = useState(false);
 
     const playScale = async () => {
