@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { keys, scales } from "../data/Constants";
 import { Button, Container, Input, Label, Select } from "./SettingBoard.styles";
 
@@ -17,34 +17,35 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     settings,
     onSettingsChange,
 }) => {
-    const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedScale = event.target.value;
-        onSettingsChange({ scale: selectedScale });
+    const [tempSettings, setTempSettings] = useState(settings); // 임시 상태로 초기화
 
-        // Chromatic 선택 시 key를 빈 문자열로 설정
-        if (selectedScale === "Chromatic") {
-            onSettingsChange({ key: "" });
-        }
+    // settings가 변경될 때 tempSettings를 업데이트
+    useEffect(() => {
+        setTempSettings(settings); // 외부에서 settings가 변경되면 tempSettings도 업데이트
+    }, [settings]);
+
+    const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setTempSettings({ ...tempSettings, scale: event.target.value });
     };
 
     const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSettingsChange({ key: event.target.value });
+        setTempSettings({ ...tempSettings, key: event.target.value });
     };
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        onSettingsChange({ bpm: Number(value) || 0 });
+        setTempSettings({ ...tempSettings, bpm: Number(value) || 0 });
+    };
+
+    const handleSave = () => {
+        onSettingsChange(tempSettings); // Save 버튼 클릭 시 변경 사항을 반영
     };
 
     return (
         <Container>
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="scale">Scale : </Label>
-                <Select
-                    id="scale"
-                    value={settings.scale}
-                    onChange={handleScaleChange}
-                >
+                <Select id="scale" value={tempSettings.scale} onChange={handleScaleChange}>
                     {scales.map((scale: string, index: number) => (
                         <option key={index} value={scale}>
                             {scale}
@@ -54,12 +55,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
             </div>
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="key">Key : </Label>
-                <Select
-                    id="key"
-                    value={settings.key}
-                    onChange={handleKeyChange}
-                    disabled={settings.scale === "Chromatic"}
-                >
+                <Select id="key" value={tempSettings.key} onChange={handleKeyChange}>
                     {keys.map((key: string, index: number) => (
                         <option key={index} value={key}>
                             {key}
@@ -72,13 +68,13 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                 <Input
                     type="number"
                     id="bpm"
-                    value={settings.bpm}
+                    value={tempSettings.bpm}
                     onChange={handleBpmChange}
                     min="40"
                     max="240"
                 />
             </div>
-            <Button onClick={() => onSettingsChange(settings)}>Save</Button>
+            <Button onClick={handleSave}>Save</Button>
         </Container>
     );
 };
