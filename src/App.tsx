@@ -7,7 +7,7 @@ const App: React.FC = () => {
     const [settings, setSettings] = useState({
         bpm: 60,
         scale: 'Chromatic',
-        key: '',
+        key: '-',
     });
 
     const handleSettingsChange = (newSettings: Partial<typeof settings>) => {

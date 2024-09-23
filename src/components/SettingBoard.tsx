@@ -25,7 +25,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     }, [settings]);
 
     const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setTempSettings({ ...tempSettings, scale: event.target.value });
+        setTempSettings({ ...tempSettings, scale: event.target.value, key: '-' }); // 스케일 변경 시 key를 '-'로 설정
     };
 
     const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
