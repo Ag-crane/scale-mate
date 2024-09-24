@@ -58,7 +58,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
             </div>
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="key">Key : </Label>
-                <Select id="key" value={tempSettings.key} onChange={handleKeyChange}>
+                <Select id="key" value={tempSettings.key} onChange={handleKeyChange} disabled={tempSettings.scale === "Chromatic"}>
                     {keys.map((key: string, index: number) => (
                         <option key={index} value={key}>
                             {key}
