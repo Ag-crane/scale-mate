@@ -31,7 +31,8 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     };
 
     const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setTempSettings({ ...tempSettings, key: event.target.value });
+        const value = event.target.value === '-' ? '' : event.target.value; // '-'일 때는 빈 문자열로 변환
+        setTempSettings({ ...tempSettings, key: value });
     };
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
