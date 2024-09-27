@@ -11,14 +11,36 @@ const Container = styled.div`
     padding-top: 60px; /* Header의 높이만큼 패딩 추가 */
 `;
 
-const SettingBoardContainer = styled.div`
-    margin-top: 20px;
+const MainContainer = styled.div`
+    display: flex;
+    justify-content: space-between; 
+    align-items: stretch; /* 두 컴포넌트의 높이를 동일하게 맞춤 */
     width: 100%;
     max-width: 1200px;
+    margin-top: 20px;
+`;
+
+const SettingBoardContainer = styled.div`
+    flex: 1;
+    margin-right: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     background-color: #ffffff;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`;
+
+const MetronomeContainer = styled.div`
+    flex: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 `;
 
 const ScalePlayerContainer = styled.div`
@@ -47,4 +69,4 @@ const Header = styled.div`
     z-index: 1000;
 `;
 
-export { Container, SettingBoardContainer, ScalePlayerContainer, Header };
+export { Container, SettingBoardContainer, MainContainer, MetronomeContainer, ScalePlayerContainer, Header };

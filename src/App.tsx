@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import SettingBoard from "./components/SettingBoard";
 import ScalePlayer from "./components/ScalePlayer";
-import { Container, Header, ScalePlayerContainer, SettingBoardContainer } from "./App.styles";
+import Metronome from "./components/Metronome";
+import { Container, Header, MainContainer, MetronomeContainer, ScalePlayerContainer, SettingBoardContainer } from "./App.styles";
 
 const App: React.FC = () => {
     const [settings, setSettings] = useState({
@@ -29,18 +30,23 @@ const App: React.FC = () => {
     return (
         <Container>
             <Header>Scale Mate</Header>
-            <SettingBoardContainer>
-                <SettingBoard
-                    settings={settings}
-                    onSettingsChange={handleSettingsChange}
-                    onSave={handleSave} // Save 버튼 클릭 시 노트 상태 초기화 함수 전달
-                />
-            </SettingBoardContainer>
+            <MainContainer>
+                <SettingBoardContainer>
+                    <SettingBoard
+                        settings={settings}
+                        onSettingsChange={handleSettingsChange}
+                        onSave={handleSave}
+                    />
+                </SettingBoardContainer>
+                <MetronomeContainer>
+                    <Metronome />
+                </MetronomeContainer>
+            </MainContainer>
             <ScalePlayerContainer>
                 <ScalePlayer 
                     settings={settings} 
                     currentPlayingNotes={currentPlayingNotes}
-                    setCurrentPlayingNotes={setCurrentPlayingNotes} // 상태 전달
+                    setCurrentPlayingNotes={setCurrentPlayingNotes}
                 />
             </ScalePlayerContainer>
         </Container>
