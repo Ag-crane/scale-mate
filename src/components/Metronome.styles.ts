@@ -8,12 +8,16 @@ const swingLeftRight = keyframes`
 `;
 
 const Container = styled.div`
-    width: 100%;
+    /* width: 100%; */
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
 `;
 
 const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
@@ -49,30 +53,30 @@ const Input = styled.input`
     padding: 5px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
     margin-left: 10px;
     margin-right: 10px;
 `;
 
 const Label = styled.label`
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     margin-right: 10px;
 `;
 
 const Button = styled.button`
     padding: 8px 20px;
-    background-color: ${({ disabled }) => (disabled ? '#ccc' : '#007BFF')};
-    color: white;
     border: none;
     border-radius: 4px;
     cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-    font-size: 14px;
+    font-size: 16px;
     transition: background-color 0.3s ease;
+    background-color: rgb(40, 44, 52, 0.5);
+    color: white;
 
     &:hover {
-        background-color: ${({ disabled }) => (disabled ? '#ccc' : '#0056b3')};
+        background-color: rgb(40, 44, 52, 1);
     }
 `;
 
