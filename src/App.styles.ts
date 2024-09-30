@@ -30,6 +30,8 @@ const SettingBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: center;
+    justify-content: center;
 `;
 
 const MetronomeContainer = styled.div`
@@ -41,6 +43,8 @@ const MetronomeContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: center;
+    justify-content: center;
 `;
 
 const ScalePlayerContainer = styled.div`
