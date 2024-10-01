@@ -1,4 +1,4 @@
-import { fretboard } from "./Constants";
+import { fretboard } from "../data/constants";
 
 // 스케일 패턴 정의
 const scalePatterns: Record<string, number[]> = {

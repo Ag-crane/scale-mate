@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
-import { getScaleBlocks, getScaleNotesForSettings } from "../data/Scales";
+import { getScaleBlocks, getScaleNotesForSettings } from "../utils/Scales";
 import Fretboard from "./Fretboard";
-import { scaleBlockRanges } from "../data/Constants";
-import { getTimeUntilNextBeat } from "../data/Functions";
+import { scaleBlockRanges } from "../data/constants";
+import { getTimeUntilNextBeat } from "../utils/getTimeUntilNextBeat";
 
 interface ScalePlayerProps {
     settings: {

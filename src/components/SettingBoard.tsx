@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { keys, scales } from "../data/Constants";
+import { keys, scales } from "../data/constants";
 import { Button, Container, Input, Label, Select } from "./SettingBoard.styles";
 
 interface SettingBoardProps {
