@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SettingBoard from "./components/SettingBoard";
 import ScalePlayer from "./components/ScalePlayer";
 import Metronome from "./components/Metronome";
 import { Container, Header, MainContainer, MetronomeContainer, ScalePlayerContainer, SettingBoardContainer } from "./App.styles";
+import { start } from "tone";
 
 const App: React.FC = () => {
     const [settings, setSettings] = useState({
@@ -27,6 +28,14 @@ const App: React.FC = () => {
         setCurrentPlayingNotes(Array(6).fill(null).map(() => Array(12).fill(false)));
     };
 
+    useEffect(() => {
+        // Tone.js 시작
+        const startTone = async () => {
+            await start();
+        };
+        startTone();
+    }, []);
+
     return (
         <Container>
             <Header>Scale Mate</Header>
@@ -39,7 +48,7 @@ const App: React.FC = () => {
                     />
                 </SettingBoardContainer>
                 <MetronomeContainer>
-                    <Metronome />
+                    <Metronome bpm={settings.bpm} />
                 </MetronomeContainer>
             </MainContainer>
             <ScalePlayerContainer>
