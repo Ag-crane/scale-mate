@@ -4,6 +4,7 @@ import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
 import { getScaleBlocks, getScaleNotesForSettings } from "../data/Scales";
 import Fretboard from "./Fretboard";
 import { scaleBlockRanges } from "../data/Constants";
+import { getTimeUntilNextBeat } from "../data/Functions";
 
 interface ScalePlayerProps {
     settings: {
@@ -90,6 +91,8 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
             clockRef.current.dispose();
         }
 
+        const timeUntilNextBeat = getTimeUntilNextBeat(settings.bpm);
+
         clockRef.current = new Tone.Clock((time) => {
             if (indexRef.current >= notesToPlayRef.current.length) {
                 clockRef.current?.stop();
@@ -113,9 +116,9 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                 time
             );
             indexRef.current += 1;
-        }, (60 / settings.bpm)); // 8분음표 간격
+        }, (settings.bpm / 60 * 4));
 
-        clockRef.current.start();
+        clockRef.current.start(Tone.now() + timeUntilNextBeat);
     };
 
     const stopScale = () => {

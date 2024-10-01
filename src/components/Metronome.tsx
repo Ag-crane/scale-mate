@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
-import { Button, Container, ControlPanel, Input, Label, Pendulum } from './Metronome.styles';
+import { Button, Container, ControlPanel, Pendulum } from './Metronome.styles';
+import { getTimeUntilNextBeat } from '../data/Functions';
 
-const Metronome: React.FC = () => {
-    const [bpm, setBpm] = useState(60);
+interface MetronomeProps {
+    bpm: number;
+}
+
+const Metronome: React.FC<MetronomeProps> = ({ bpm }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [tick, setTick] = useState(0);
     const synthRef = useRef<Tone.Synth | null>(null);
@@ -49,27 +53,32 @@ const Metronome: React.FC = () => {
         }
     }, [isPlaying]);
 
-    const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newBpm = Number(event.target.value);
-        if (newBpm >= 40 && newBpm <= 240) {
-            setBpm(newBpm);
+    const startMetronome = () => {
+        if (clockRef.current) {
+            clockRef.current.dispose();
         }
+
+        const timeUntilNextBeat = getTimeUntilNextBeat(bpm);
+
+        clockRef.current = new Tone.Clock((time) => {
+            synthRef.current?.triggerAttackRelease('C4', '8n', time);
+            setTick((prevTick) => (prevTick + 1) % 2);
+        }, bpm / 60);
+
+        clockRef.current.start(Tone.now() + timeUntilNextBeat);
+        setIsPlaying(true);
+    };
+
+    const stopMetronome = () => {
+        clockRef.current?.stop();
+        setIsPlaying(false);
     };
 
     return (
         <Container>
             <Pendulum isPlaying={isPlaying} tick={tick} bpm={bpm} />
             <ControlPanel>
-                <Label htmlFor="bpm">BPM: </Label>
-                <Input
-                    type="number"
-                    id="bpm"
-                    value={bpm}
-                    onChange={handleBpmChange}
-                    min="40"
-                    max="240"
-                />
-                <Button onClick={() => setIsPlaying(!isPlaying)}>
+                <Button onClick={() => (isPlaying ? stopMetronome() : startMetronome())}>
                     {isPlaying ? 'Stop' : 'Start'}
                 </Button>
             </ControlPanel>
