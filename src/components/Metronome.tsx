@@ -7,12 +7,12 @@ const Metronome: React.FC = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [tick, setTick] = useState(0);
     const synthRef = useRef<Tone.Synth | null>(null);
-    const loopRef = useRef<Tone.Loop | null>(null);
+    const clockRef = useRef<Tone.Clock | null>(null);
 
     useEffect(() => {
         synthRef.current = new Tone.Synth({
             oscillator: {
-                type: 'triangle', // 메트로놈 클릭음의 음색
+                type: 'triangle',
             },
             envelope: {
                 attack: 0.001,
@@ -22,34 +22,32 @@ const Metronome: React.FC = () => {
             },
         }).toDestination();
 
+        // Clock 초기화
+        clockRef.current = new Tone.Clock((time) => {
+            synthRef.current?.triggerAttackRelease('C4', '8n', time);
+            setTick((prevTick) => (prevTick + 1) % 2);
+        }, (60 / bpm)); // BPM에 따른 주기 설정
+
         return () => {
-            if (loopRef.current) {
-                loopRef.current.dispose();
-            }
-            if (synthRef.current) {
-                synthRef.current.dispose();
-            }
+            clockRef.current?.stop();
+            clockRef.current?.dispose();
+            synthRef.current?.dispose();
         };
-    }, []);
+    }, [bpm]);
+
+    useEffect(() => {
+        if (clockRef.current) {
+            clockRef.current.frequency.value = bpm / 60; // 주기 업데이트
+        }
+    }, [bpm]);
 
     useEffect(() => {
         if (isPlaying) {
-            loopRef.current = new Tone.Loop((time) => {
-                synthRef.current?.triggerAttackRelease('C4', '8n', time); // 메트로놈 클릭음 재생
-                setTick((prevTick) => (prevTick + 1) % 2); // 0과 1 사이를 반복하여 좌우로 스윙
-            }, '4n').start(0);
-
-            Tone.Transport.bpm.value = bpm;
-            Tone.Transport.start();
+            clockRef.current?.start();
         } else {
-            Tone.Transport.stop();
-            Tone.Transport.cancel();
-            if (loopRef.current) {
-                loopRef.current.dispose();
-                loopRef.current = null;
-            }
+            clockRef.current?.stop();
         }
-    }, [isPlaying, bpm]);
+    }, [isPlaying]);
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newBpm = Number(event.target.value);
@@ -60,7 +58,7 @@ const Metronome: React.FC = () => {
 
     return (
         <Container>
-            <Pendulum isPlaying={isPlaying} tick={tick} bpm={bpm} /> {/* 좌우 움직임 애니메이션 */}
+            <Pendulum isPlaying={isPlaying} tick={tick} bpm={bpm} />
             <ControlPanel>
                 <Label htmlFor="bpm">BPM: </Label>
                 <Input
