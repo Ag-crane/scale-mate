@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
 import { Button, Container, ControlPanel, Pendulum } from './Metronome.styles';
-import { getTimeUntilNextBeat } from '../data/Functions';
+import { getTimeUntilNextBeat } from '../utils/getTimeUntilNextBeat';
 
 interface MetronomeProps {
     bpm: number;

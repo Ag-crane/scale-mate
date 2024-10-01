@@ -1,5 +1,5 @@
 import React from "react";
-import { fretboard, openNotes } from "../data/Constants";
+import { fretboard, openNotes } from "../data/constants";
 import { FretboardContainer, GuitarContainer, Note, NoteRow, OpenNotesContainer } from "./Fretboard.styles";
 
 interface FretboardProps {
