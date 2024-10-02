@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
 import { Button, Container, ControlPanel, Pendulum } from './Metronome.styles';
 import { getTimeUntilNextBeat } from '../utils/getTimeUntilNextBeat';
+import backgroundImage from '../assets/metronome.png';
 
 interface MetronomeProps {
     bpm: number;
@@ -75,7 +76,7 @@ const Metronome: React.FC<MetronomeProps> = ({ bpm }) => {
     };
 
     return (
-        <Container>
+        <Container backgroundImage={backgroundImage}>
             <Pendulum isPlaying={isPlaying} tick={tick} bpm={bpm} />
             <ControlPanel>
                 <Button onClick={() => (isPlaying ? stopMetronome() : startMetronome())}>
