@@ -7,17 +7,18 @@ const swingLeftRight = keyframes`
   100% { transform: rotate(20deg); }
 `;
 
-const Container = styled.div`
-    /* width: 100%; */
+const Container = styled.div<{ backgroundImage: string}>`
+    width: 100%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+    background-image: url(${({ backgroundImage }) => backgroundImage});
+    background-size: 200px 220px;
+    background-position: center;
+    background-repeat: no-repeat;
 `;
 
 const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
