@@ -2,9 +2,9 @@ import styled, { keyframes, css } from 'styled-components';
 
 // 좌우로 움직이는 애니메이션
 const swingLeftRight = keyframes`
-  0% { transform: rotate(-20deg); }
-  50% { transform: rotate(20deg); }
-  100% { transform: rotate(-20deg); }
+  0% { transform: rotate(20deg); }
+  50% { transform: rotate(-20deg); }
+  100% { transform: rotate(20deg); }
 `;
 
 const Container = styled.div`
@@ -24,7 +24,7 @@ const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
     width: 8px;
     height: 120px;
     background-color: ${({ isPlaying }) => (isPlaying ? '#FF6347' : '#ddd')};
-    transform-origin: top center;
+    transform-origin: bottom center;
     border-radius: 4px;
     margin-bottom: 20px;
 
