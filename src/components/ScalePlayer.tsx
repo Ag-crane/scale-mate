@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
-import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
+import { Button, ButtonContainer, Container, HiddenCheckbox, Slider, ToggleSwitch } from "./ScalePlayer.styles";
 import { getScaleBlocks, getScaleNotesForSettings } from "../utils/scales";
 import Fretboard from "./Fretboard";
 import { scaleBlockRanges } from "../data/constants";
@@ -14,12 +14,16 @@ interface ScalePlayerProps {
     };
     currentPlayingNotes: boolean[][];
     setCurrentPlayingNotes: React.Dispatch<React.SetStateAction<boolean[][]>>;
+    isMetronomePlaying: boolean;
+    setIsMetronomePlaying: (isPlaying: boolean) => void;
 }
 
 const ScalePlayer: React.FC<ScalePlayerProps> = ({
     settings,
     currentPlayingNotes,
     setCurrentPlayingNotes,
+    isMetronomePlaying,
+    setIsMetronomePlaying,
 }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const indexRef = useRef(0);
@@ -131,6 +135,10 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         );
     };
 
+    const handleMetronomeToggle = () => {
+        setIsMetronomePlaying(!isMetronomePlaying);
+    };
+
     return (
         <Container>
             <ButtonContainer>
@@ -140,6 +148,10 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                 <Button onClick={stopScale} disabled={!isPlaying}>
                     Stop
                 </Button>
+                <ToggleSwitch>
+                    <HiddenCheckbox checked={isMetronomePlaying} onChange={handleMetronomeToggle} />
+                    <Slider isPlaying={isMetronomePlaying} />
+                </ToggleSwitch>
             </ButtonContainer>
             <Fretboard
                 currentPlayingNotes={currentPlayingNotes}
