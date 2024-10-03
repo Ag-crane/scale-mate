@@ -10,6 +10,7 @@ const swingLeftRight = keyframes`
 const Container = styled.div<{ backgroundImage: string}>`
     width: 100%;
     max-width: 400px;
+    height: 220px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,7 +28,7 @@ const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
     background-color: ${({ isPlaying }) => (isPlaying ? '#FF6347' : '#ddd')};
     transform-origin: bottom center;
     border-radius: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 
     ${({ isPlaying, bpm }) =>
         isPlaying
@@ -66,19 +67,4 @@ const Label = styled.label`
     margin-right: 10px;
 `;
 
-const Button = styled.button`
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    background-color: rgb(40, 44, 52, 0.5);
-    color: white;
-
-    &:hover {
-        background-color: rgb(40, 44, 52, 1);
-    }
-`;
-
-export { swingLeftRight, Container, Pendulum, ControlPanel, Input, Label, Button };
+export { swingLeftRight, Container, Pendulum, ControlPanel, Input, Label };
