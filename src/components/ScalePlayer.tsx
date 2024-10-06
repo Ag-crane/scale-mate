@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
-import { Button, ButtonContainer, Container, HiddenCheckbox, Slider, ToggleSwitch } from "./ScalePlayer.styles";
+import {
+    Button,
+    ButtonContainer,
+    Container,
+    HiddenCheckbox,
+    Slider,
+    ToggleSwitch,
+} from "./ScalePlayer.styles";
 import { getScaleBlocks, getScaleNotesForSettings } from "../utils/scales";
 import Fretboard from "./Fretboard";
 import { scaleBlockRanges } from "../data/constants";
@@ -11,6 +18,7 @@ interface ScalePlayerProps {
         bpm: number;
         scale: string;
         key: string;
+        subdivision: number;
     };
     currentPlayingNotes: boolean[][];
     setCurrentPlayingNotes: React.Dispatch<React.SetStateAction<boolean[][]>>;
@@ -58,10 +66,9 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         if (Array.isArray(blockRangesEntry)) {
             blockRanges = blockRangesEntry as [number, number][];
         } else {
-            blockRanges = (blockRangesEntry as Record<
-                string,
-                [number, number][]
-            >)[settings.key];
+            blockRanges = (
+                blockRangesEntry as Record<string, [number, number][]>
+            )[settings.key];
         }
 
         const blocks = getScaleBlocks(scaleFretboard, blockRanges);
@@ -97,30 +104,38 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
 
         const timeUntilNextBeat = getTimeUntilNextBeat(settings.bpm);
 
-        clockRef.current = new Tone.Clock((time) => {
-            if (indexRef.current >= notesToPlayRef.current.length) {
-                clockRef.current?.stop();
-                setCurrentPlayingNotes(
-                    Array(6)
-                        .fill(null)
-                        .map(() => Array(12).fill(false))
+        const beatDuration = 60 / settings.bpm; // 한 박자(4분음표)의 길이
+        const noteInterval = beatDuration / settings.subdivision; // 노트 간 간격 (초 단위)
+
+        clockRef.current = new Tone.Clock(
+            (time) => {
+                if (indexRef.current >= notesToPlayRef.current.length) {
+                    clockRef.current?.stop();
+                    setCurrentPlayingNotes(
+                        Array(6)
+                            .fill(null)
+                            .map(() => Array(12).fill(false))
+                    );
+                    setIsPlaying(false);
+                    return;
+                }
+                const noteObj = notesToPlayRef.current[indexRef.current];
+                setCurrentPlayingNotes((prev) => {
+                    const newPositions = prev.map((row) =>
+                        row.map(() => false)
+                    );
+                    newPositions[noteObj.rowIndex][noteObj.colIndex] = true;
+                    return newPositions;
+                });
+                synthRef.current?.triggerAttackRelease(
+                    noteObj.note,
+                    `${beatDuration / settings.subdivision}s`,
+                    time
                 );
-                setIsPlaying(false);
-                return;
-            }
-            const noteObj = notesToPlayRef.current[indexRef.current];
-            setCurrentPlayingNotes((prev) => {
-                const newPositions = prev.map((row) => row.map(() => false));
-                newPositions[noteObj.rowIndex][noteObj.colIndex] = true;
-                return newPositions;
-            });
-            synthRef.current?.triggerAttackRelease(
-                noteObj.note,
-                '8n',
-                time
-            );
-            indexRef.current += 1;
-        }, (settings.bpm / 60 * 4));
+                indexRef.current += 1;
+            },
+            1 / noteInterval // 역수 취하여 Hz 단위로 변환
+        );
 
         clockRef.current.start(Tone.now() + timeUntilNextBeat);
     };
@@ -149,7 +164,10 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     Stop
                 </Button>
                 <ToggleSwitch>
-                    <HiddenCheckbox checked={isMetronomePlaying} onChange={handleMetronomeToggle} />
+                    <HiddenCheckbox
+                        checked={isMetronomePlaying}
+                        onChange={handleMetronomeToggle}
+                    />
                     <Slider isPlaying={isMetronomePlaying} />
                 </ToggleSwitch>
             </ButtonContainer>
@@ -164,6 +182,5 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         </Container>
     );
 };
-
 
 export default ScalePlayer;

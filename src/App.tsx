@@ -10,6 +10,7 @@ const App: React.FC = () => {
         bpm: 60,
         scale: 'Chromatic',
         key: '',
+        subdivision: 1,
     });
     const [currentPlayingNotes, setCurrentPlayingNotes] = useState<boolean[][]>(
         Array(6).fill(null).map(() => Array(12).fill(false))
