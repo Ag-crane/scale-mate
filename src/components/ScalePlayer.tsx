@@ -129,7 +129,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                 });
                 synthRef.current?.triggerAttackRelease(
                     noteObj.note,
-                    `${beatDuration / settings.subdivision}s`,
+                    `${noteInterval}s`, // 노트 길이
                     time
                 );
                 indexRef.current += 1;
