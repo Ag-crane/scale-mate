@@ -1,13 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
-import {
-    Button,
-    ButtonContainer,
-    Container,
-    HiddenCheckbox,
-    Slider,
-    ToggleSwitch,
-} from "./ScalePlayer.styles";
+import { Button, ButtonContainer, Container, HiddenCheckbox, Slider, ToggleSwitch } from "./ScalePlayer.styles";
 import { getScaleBlocks, getScaleNotesForSettings } from "../utils/scales";
 import Fretboard from "./Fretboard";
 import { scaleBlockRanges } from "../data/constants";
@@ -51,7 +44,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
             synthRef.current?.dispose();
         };
     }, []);
-
+  
     const [selectedBlock, setSelectedBlock] = useState<number | null>(null);
 
     const blockRanges = useMemo(() => {
@@ -87,9 +80,6 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         return blockNumbersArray;
     }, [blockRanges]);
     
-    console.log("blockNumbers", blockNumbers);
-    
-
     const playScale = async () => {
         setIsPlaying(true);
         await Tone.start();
@@ -238,5 +228,6 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         </Container>
     );
 };
+
 
 export default ScalePlayer;

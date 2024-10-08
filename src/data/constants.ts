@@ -15,8 +15,6 @@ const openNotes = ["E2", "A2", "D3", "G3", "B3", "E4"];
 
 type ScaleBlockRangesEntry = [number, number][] | Record<string, [number, number][]>;
 
-const BEAT_UNIT = '4n'; // 4분음표를 Beat Unit으로 사용
-
 const subdivisionOptions = [
     { value: 1, label: '1' },
     { value: 2, label: '2' },
@@ -184,4 +182,4 @@ const scaleBlockRanges: Record<string, ScaleBlockRangesEntry> = {
     }
 };
 
-export { scales, keys, fretboard, openNotes , scaleBlockRanges, subdivisionOptions, BEAT_UNIT };
+export { scales, keys, fretboard, openNotes , scaleBlockRanges, subdivisionOptions };
