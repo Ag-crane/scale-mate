@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as Tone from "tone";
 import { Button, ButtonContainer, Container, HiddenCheckbox, Slider, ToggleSwitch } from "./ScalePlayer.styles";
 import { getScaleBlocks, getScaleNotesForSettings } from "../utils/scales";
