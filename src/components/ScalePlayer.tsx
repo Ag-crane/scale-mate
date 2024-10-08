@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as Tone from "tone";
 import {
     Button,
@@ -12,6 +12,7 @@ import { getScaleBlocks, getScaleNotesForSettings } from "../utils/scales";
 import Fretboard from "./Fretboard";
 import { scaleBlockRanges } from "../data/constants";
 import { getTimeUntilNextBeat } from "../utils/getTimeUntilNextBeat";
+import BlockSelector from "./BlockSelector";
 
 interface ScalePlayerProps {
     settings: {
@@ -50,6 +51,44 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
             synthRef.current?.dispose();
         };
     }, []);
+
+    const [selectedBlock, setSelectedBlock] = useState<number | null>(null);
+
+    const blockRanges = useMemo(() => {
+        const blockRangesEntry = scaleBlockRanges[settings.scale];
+        if (Array.isArray(blockRangesEntry)) {
+            return blockRangesEntry as [number, number][];
+        } else {
+            return (
+                (blockRangesEntry as Record<string, [number, number][]>)[
+                    settings.key
+                ] || []
+            );
+        }
+    }, [settings.scale, settings.key]);
+
+    const availableBlocks = useMemo(() => {
+        return blockRanges.map((_, index) => index + 1);
+    }, [blockRanges]);
+
+    const blockNumbers = useMemo(() => {
+        const blockNumbersArray = Array.from({ length: 6 }, () => Array.from({ length: 16 }, () => [] as number[]));
+
+        blockRanges.forEach(([startFret, endFret], blockIndex) => {
+            for (let stringIndex = 0; stringIndex < 6; stringIndex++) {
+                for (let fretIndex = startFret - 1; fretIndex < endFret; fretIndex++) {
+                    if (fretIndex >= 0 && fretIndex < 16) {
+                        blockNumbersArray[stringIndex][fretIndex].push(blockIndex + 1);
+                    }
+                }
+            }
+        });
+    
+        return blockNumbersArray;
+    }, [blockRanges]);
+    
+    console.log("blockNumbers", blockNumbers);
+    
 
     const playScale = async () => {
         setIsPlaying(true);
@@ -193,6 +232,8 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     settings.key
                 )}
                 rootNote={settings.key}
+                selectedBlock={selectedBlock}
+                blockNumbers={blockNumbers}
             />
         </Container>
     );
