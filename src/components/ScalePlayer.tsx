@@ -71,6 +71,16 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
             )[settings.key];
         }
 
+        // 선택된 블록이 있으면 해당 블록만 사용
+        if (selectedBlock !== null) {
+            if (selectedBlock - 1 < blockRanges.length) {
+                blockRanges = [blockRanges[selectedBlock - 1]]; // 블록 번호는 1부터 시작하므로 인덱스는 -1
+            } else {
+                console.error("선택한 블록 번호가 범위를 벗어났습니다.");
+                return;
+            }
+        }
+
         const blocks = getScaleBlocks(scaleFretboard, blockRanges);
 
         const notesToPlay: {
@@ -171,6 +181,11 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     <Slider isPlaying={isMetronomePlaying} />
                 </ToggleSwitch>
             </ButtonContainer>
+            <BlockSelector
+                selectedBlock={selectedBlock}
+                setSelectedBlock={setSelectedBlock}
+                availableBlocks={availableBlocks}
+            />
             <Fretboard
                 currentPlayingNotes={currentPlayingNotes}
                 scaleNotes={getScaleNotesForSettings(
