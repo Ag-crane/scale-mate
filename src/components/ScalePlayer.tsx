@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as Tone from "tone";
-import { Button, ButtonContainer, Container, HiddenCheckbox, Slider, ToggleSwitch } from "./ScalePlayer.styles";
+import {
+    Button,
+    ButtonContainer,
+    Container,
+    HiddenCheckbox,
+    Slider,
+    ToggleSwitch,
+} from "./ScalePlayer.styles";
 import { getScaleBlocks, getScaleNotesForSettings } from "../utils/scales";
 import Fretboard from "./Fretboard";
 import { scaleBlockRanges } from "../data/constants";
@@ -44,7 +51,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
             synthRef.current?.dispose();
         };
     }, []);
-  
+
     const [selectedBlock, setSelectedBlock] = useState<number | null>(null);
 
     const blockRanges = useMemo(() => {
@@ -65,21 +72,29 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
     }, [blockRanges]);
 
     const blockNumbers = useMemo(() => {
-        const blockNumbersArray = Array.from({ length: 6 }, () => Array.from({ length: 16 }, () => [] as number[]));
+        const blockNumbersArray = Array.from({ length: 6 }, () =>
+            Array.from({ length: 16 }, () => [] as number[])
+        );
 
         blockRanges.forEach(([startFret, endFret], blockIndex) => {
             for (let stringIndex = 0; stringIndex < 6; stringIndex++) {
-                for (let fretIndex = startFret - 1; fretIndex < endFret; fretIndex++) {
+                for (
+                    let fretIndex = startFret - 1;
+                    fretIndex < endFret;
+                    fretIndex++
+                ) {
                     if (fretIndex >= 0 && fretIndex < 16) {
-                        blockNumbersArray[stringIndex][fretIndex].push(blockIndex + 1);
+                        blockNumbersArray[stringIndex][fretIndex].push(
+                            blockIndex + 1
+                        );
                     }
                 }
             }
         });
-    
+
         return blockNumbersArray;
     }, [blockRanges]);
-    
+
     const playScale = async () => {
         setIsPlaying(true);
         await Tone.start();
@@ -130,8 +145,8 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     }
                 });
             });
-            notesToPlay.push(...currentBlockNotes); // 상행
-            notesToPlay.push(...currentBlockNotes.slice().reverse()); // 하행
+            notesToPlay.push(...currentBlockNotes);
+            notesToPlay.push(...currentBlockNotes.slice().reverse());
         });
 
         notesToPlayRef.current = notesToPlay;
@@ -228,6 +243,5 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         </Container>
     );
 };
-
 
 export default ScalePlayer;

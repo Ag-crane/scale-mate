@@ -4,16 +4,16 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    `
+`;
 const ButtonContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-`
+`;
 
 const Button = styled.button`
     padding: 10px 20px;
-    `
+`;
 
 const ToggleSwitch = styled.label`
     position: relative;
@@ -23,7 +23,7 @@ const ToggleSwitch = styled.label`
     margin-left: 10px;
 `;
 
-const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
+const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })`
     opacity: 0;
     width: 0;
     height: 0;
@@ -36,16 +36,16 @@ const Slider = styled.span<{ isPlaying: boolean }>`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: ${({ isPlaying }) => (isPlaying ? '#FF6347' : '#ccc')};
+    background-color: ${({ isPlaying }) => (isPlaying ? "#FF6347" : "#ccc")};
     transition: 0.4s;
     border-radius: 34px;
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         height: 26px;
         width: 26px;
-        left: ${({ isPlaying }) => (isPlaying ? '30px' : '4px')};
+        left: ${({ isPlaying }) => (isPlaying ? "30px" : "4px")};
         bottom: 4px;
         background-color: white;
         transition: 0.4s;
@@ -53,4 +53,11 @@ const Slider = styled.span<{ isPlaying: boolean }>`
     }
 `;
 
-export { Container, ButtonContainer, Button, ToggleSwitch, HiddenCheckbox, Slider };
+export {
+    Container,
+    ButtonContainer,
+    Button,
+    ToggleSwitch,
+    HiddenCheckbox,
+    Slider,
+};

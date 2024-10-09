@@ -34,7 +34,7 @@ const OpenNote = styled.div`
     color: white;
     font-weight: bold;
     font-size: 12px;
-    
+
     & > div {
         background-color: #753c24;
         border-radius: 50%;
@@ -54,9 +54,14 @@ const NoteRow = styled.div`
     height: 40px;
 `;
 
-const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?: boolean; isRootNote?: boolean
-    selectedBlock: number | null; blockNumber: (number | null)[];
- }>`
+const Note = styled.div<{
+    isActive?: boolean;
+    isOpenNote?: boolean;
+    isScaleNote?: boolean;
+    isRootNote?: boolean;
+    selectedBlock: number | null;
+    blockNumber: (number | null)[];
+}>`
     flex: 1;
     display: flex;
     justify-content: center;
@@ -68,7 +73,13 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?
 
     & > div {
         background-color: ${({ isActive, isScaleNote, isRootNote }) =>
-            isActive ? "#ff0" : isRootNote ? "#ff6347" : isScaleNote ? "#fff" : "#eee"}; 
+            isActive
+                ? "#ff0"
+                : isRootNote
+                ? "#ff6347"
+                : isScaleNote
+                ? "#fff"
+                : "#eee"};
         color: ${({ isActive, isRootNote }) =>
             isActive ? "#000" : isRootNote ? "#fff" : "#333"};
         border-radius: 50%;
@@ -91,4 +102,11 @@ const Note = styled.div<{ isActive?: boolean; isOpenNote?: boolean; isScaleNote?
     }
 `;
 
-export { GuitarContainer, FretboardContainer, OpenNotesContainer, OpenNote, NoteRow, Note };
+export {
+    GuitarContainer,
+    FretboardContainer,
+    OpenNotesContainer,
+    OpenNote,
+    NoteRow,
+    Note,
+};

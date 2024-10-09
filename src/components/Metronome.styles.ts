@@ -1,13 +1,12 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes, css } from "styled-components";
 
-// 좌우로 움직이는 애니메이션
 const swingLeftRight = keyframes`
   0% { transform: rotate(20deg); }
   50% { transform: rotate(-20deg); }
   100% { transform: rotate(20deg); }
 `;
 
-const Container = styled.div<{ backgroundImage: string}>`
+const Container = styled.div<{ backgroundImage: string }>`
     width: 100%;
     max-width: 400px;
     height: 220px;
@@ -25,7 +24,7 @@ const Container = styled.div<{ backgroundImage: string}>`
 const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
     width: 8px;
     height: 120px;
-    background-color: ${({ isPlaying }) => (isPlaying ? '#FF6347' : '#ddd')};
+    background-color: ${({ isPlaying }) => (isPlaying ? "#FF6347" : "#ddd")};
     transform-origin: bottom center;
     border-radius: 4px;
     margin-bottom: 40px;
@@ -33,10 +32,11 @@ const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
     ${({ isPlaying, bpm }) =>
         isPlaying
             ? css`
-                animation: ${swingLeftRight} ${120 / bpm}s infinite ease-in-out;
+                  animation: ${swingLeftRight} ${120 / bpm}s infinite
+                      ease-in-out;
               `
             : css`
-                transform: rotate(0deg);
+                  transform: rotate(0deg);
               `};
     transition: transform 0.5s ease-in-out;
 `;

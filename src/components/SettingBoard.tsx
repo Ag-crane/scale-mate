@@ -100,9 +100,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                 />
             </div>
             <div>
-                <Label htmlFor="subdivision">
-                    Subdivision : 
-                </Label>
+                <Label htmlFor="subdivision">Subdivision :</Label>
                 <Select
                     id="subdivision"
                     value={tempSettings.subdivision}
