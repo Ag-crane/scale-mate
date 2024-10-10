@@ -22,6 +22,9 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
 }) => {
     const [tempSettings, setTempSettings] = useState(settings);
 
+    const isSaveDisabled =
+        tempSettings.scale !== "Chromatic" && tempSettings.key === "";
+
     useEffect(() => {
         setTempSettings(settings);
     }, [settings]);
@@ -30,7 +33,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
         setTempSettings({
             ...tempSettings,
             scale: event.target.value,
-            key: "-",
+            key: "",
         });
     };
 
@@ -74,24 +77,25 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     ))}
                 </Select>
             </div>
-            <div style={{ marginBottom: "20px" }}>
-                <Label htmlFor="key">Key : </Label>
-                <Select
-                    id="key"
-                    value={tempSettings.key}
-                    onChange={handleKeyChange}
-                    disabled={tempSettings.scale === "Chromatic"}
-                >
-                    {keys.map((key: string, index: number) => (
-                        <option key={index} value={key}>
-                            {key}
-                        </option>
-                    ))}
-                </Select>
+            {tempSettings.scale !== "Chromatic" && (
+                <div style={{ marginBottom: "20px" }}>
+                    <Label htmlFor="key">Key : </Label>
+                    <Select
+                        id="key"
+                        value={tempSettings.key}
+                        onChange={handleKeyChange}
+                    >
+                        {keys.map((key: string, index: number) => (
+                            <option key={index} value={key}>
+                                {key}
+                            </option>
+                        ))}
+                    </Select>
                     {isSaveDisabled && (
                         <p style={{ color: "red" }}>Please select a key</p>
                     )}
-            </div>
+                </div>
+            )}
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="bpm">BPM : </Label>
                 <Input
