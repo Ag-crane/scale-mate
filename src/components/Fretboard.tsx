@@ -15,6 +15,7 @@ interface FretboardProps {
     rootNote: string;
     selectedBlock: number | null;
     blockNumbers: (number | null)[][][];
+    scale: string;
 }
 
 const Fretboard: React.FC<FretboardProps> = ({
@@ -23,7 +24,10 @@ const Fretboard: React.FC<FretboardProps> = ({
     rootNote,
     selectedBlock,
     blockNumbers,
+    scale,
 }) => {
+    const maxFret = scale === "Chromatic" ? 12 : 16;
+
     return (
         <GuitarContainer>
             <OpenNotesContainer>
@@ -37,6 +41,8 @@ const Fretboard: React.FC<FretboardProps> = ({
                 {fretboard.map((row: string[], rowIndex: number) => (
                     <NoteRow key={rowIndex}>
                         {row.map((note: string, colIndex: number) => {
+                            if (colIndex >= maxFret) return null;
+
                             const isActive =
                                 currentPlayingNotes[rowIndex][colIndex];
                             const isScaleNote =

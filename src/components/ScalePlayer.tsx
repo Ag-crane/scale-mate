@@ -245,6 +245,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                 rootNote={settings.key}
                 selectedBlock={selectedBlock}
                 blockNumbers={blockNumbers}
+                scale={settings.scale}
             />
         </Container>
     );
