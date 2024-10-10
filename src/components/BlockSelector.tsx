@@ -14,13 +14,19 @@ const BlockSelector: React.FC<BlockSelectorProps> = ({
 }) => {
     return (
         <BlockSelectorContainer>
+            <BlockButton
+                isSelected={selectedBlock === null}
+                onClick={() => setSelectedBlock(null)} // null을 선택하면 전체 스케일이 재생됨
+            >
+                Full
+            </BlockButton>
             {availableBlocks.map((block) => (
                 <BlockButton
                     key={block}
                     isSelected={selectedBlock === block}
                     onClick={() => setSelectedBlock(block)}
                 >
-                    Block {block}
+                    {block}
                 </BlockButton>
             ))}
         </BlockSelectorContainer>
