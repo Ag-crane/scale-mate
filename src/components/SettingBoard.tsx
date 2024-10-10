@@ -52,8 +52,10 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     };
 
     const handleSave = () => {
-        onSettingsChange(tempSettings);
-        onSave();
+        if (!isSaveDisabled) {
+            onSettingsChange(tempSettings);
+            onSave();
+        }
     };
 
     return (
@@ -86,6 +88,9 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                         </option>
                     ))}
                 </Select>
+                    {isSaveDisabled && (
+                        <p style={{ color: "red" }}>Please select a key</p>
+                    )}
             </div>
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="bpm">BPM : </Label>
@@ -112,7 +117,9 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     ))}
                 </Select>
             </div>
-            <Button onClick={handleSave}>Save</Button>
+            <Button disabled={isSaveDisabled} onClick={handleSave}>
+                Save
+            </Button>
         </Container>
     );
 };
