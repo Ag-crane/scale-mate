@@ -18,13 +18,12 @@ interface SettingBoardProps {
 const SettingBoard: React.FC<SettingBoardProps> = ({
     settings,
     onSettingsChange,
-    onSave, // Save 버튼 클릭 시 호출되는 함수
+    onSave,
 }) => {
-    const [tempSettings, setTempSettings] = useState(settings); // 임시 상태로 초기화
+    const [tempSettings, setTempSettings] = useState(settings);
 
-    // settings가 변경될 때 tempSettings를 업데이트
     useEffect(() => {
-        setTempSettings(settings); // 외부에서 settings가 변경되면 tempSettings도 업데이트
+        setTempSettings(settings);
     }, [settings]);
 
     const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,7 +31,7 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
             ...tempSettings,
             scale: event.target.value,
             key: "-",
-        }); // 스케일 변경 시 key를 '-'로 설정
+        });
     };
 
     const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -53,8 +52,8 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
     };
 
     const handleSave = () => {
-        onSettingsChange(tempSettings); // Save 버튼을 눌렀을 때 설정 변경 사항 반영
-        onSave(); // 재생 중이던 노트를 초기화하는 함수 호출
+        onSettingsChange(tempSettings);
+        onSave();
     };
 
     return (
