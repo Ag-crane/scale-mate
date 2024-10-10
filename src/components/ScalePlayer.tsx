@@ -52,6 +52,10 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         };
     }, []);
 
+    useEffect(() => {
+        setSelectedBlock(null);
+    }, [settings.scale, settings.key]);
+
     const [selectedBlock, setSelectedBlock] = useState<number | null>(null);
 
     const blockRanges = useMemo(() => {
