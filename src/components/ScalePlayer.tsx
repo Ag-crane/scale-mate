@@ -225,11 +225,13 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     <Slider isPlaying={isMetronomePlaying} />
                 </ToggleSwitch>
             </ButtonContainer>
-            <BlockSelector
-                selectedBlock={selectedBlock}
-                setSelectedBlock={setSelectedBlock}
-                availableBlocks={availableBlocks}
-            />
+            {settings.scale !== "Chromatic" && (
+                <BlockSelector
+                    selectedBlock={selectedBlock}
+                    setSelectedBlock={setSelectedBlock}
+                    availableBlocks={availableBlocks}
+                />
+            )}
             <Fretboard
                 currentPlayingNotes={currentPlayingNotes}
                 scaleNotes={getScaleNotesForSettings(
