@@ -1,16 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as Tone from "tone";
-import { Button, ButtonContainer, Container, HiddenCheckbox, Slider, ToggleSwitch } from "./ScalePlayer.styles";
+import {
+    Button,
+    ButtonContainer,
+    Container,
+    HiddenCheckbox,
+    Slider,
+    ToggleSwitch,
+} from "./ScalePlayer.styles";
 import { getScaleBlocks, getScaleNotesForSettings } from "../utils/scales";
 import Fretboard from "./Fretboard";
 import { scaleBlockRanges } from "../data/constants";
 import { getTimeUntilNextBeat } from "../utils/getTimeUntilNextBeat";
+import BlockSelector from "./BlockSelector";
 
 interface ScalePlayerProps {
     settings: {
         bpm: number;
         scale: string;
         key: string;
+        subdivision: number;
     };
     currentPlayingNotes: boolean[][];
     setCurrentPlayingNotes: React.Dispatch<React.SetStateAction<boolean[][]>>;
@@ -43,6 +52,53 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         };
     }, []);
 
+    useEffect(() => {
+        setSelectedBlock(null);
+    }, [settings.scale, settings.key]);
+
+    const [selectedBlock, setSelectedBlock] = useState<number | null>(null);
+
+    const blockRanges = useMemo(() => {
+        const blockRangesEntry = scaleBlockRanges[settings.scale];
+        if (Array.isArray(blockRangesEntry)) {
+            return blockRangesEntry as [number, number][];
+        } else {
+            return (
+                (blockRangesEntry as Record<string, [number, number][]>)[
+                    settings.key
+                ] || []
+            );
+        }
+    }, [settings.scale, settings.key]);
+
+    const availableBlocks = useMemo(() => {
+        return blockRanges.map((_, index) => index + 1);
+    }, [blockRanges]);
+
+    const blockNumbers = useMemo(() => {
+        const blockNumbersArray = Array.from({ length: 6 }, () =>
+            Array.from({ length: 16 }, () => [] as number[])
+        );
+
+        blockRanges.forEach(([startFret, endFret], blockIndex) => {
+            for (let stringIndex = 0; stringIndex < 6; stringIndex++) {
+                for (
+                    let fretIndex = startFret - 1;
+                    fretIndex < endFret;
+                    fretIndex++
+                ) {
+                    if (fretIndex >= 0 && fretIndex < 16) {
+                        blockNumbersArray[stringIndex][fretIndex].push(
+                            blockIndex + 1
+                        );
+                    }
+                }
+            }
+        });
+
+        return blockNumbersArray;
+    }, [blockRanges]);
+
     const playScale = async () => {
         setIsPlaying(true);
         await Tone.start();
@@ -58,10 +114,19 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         if (Array.isArray(blockRangesEntry)) {
             blockRanges = blockRangesEntry as [number, number][];
         } else {
-            blockRanges = (blockRangesEntry as Record<
-                string,
-                [number, number][]
-            >)[settings.key];
+            blockRanges = (
+                blockRangesEntry as Record<string, [number, number][]>
+            )[settings.key];
+        }
+
+        // 선택된 블록이 있으면 해당 블록만 사용
+        if (selectedBlock !== null) {
+            if (selectedBlock - 1 < blockRanges.length) {
+                blockRanges = [blockRanges[selectedBlock - 1]]; // 블록 번호는 1부터 시작하므로 인덱스는 -1
+            } else {
+                console.error("선택한 블록 번호가 범위를 벗어났습니다.");
+                return;
+            }
         }
 
         const blocks = getScaleBlocks(scaleFretboard, blockRanges);
@@ -84,8 +149,8 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     }
                 });
             });
-            notesToPlay.push(...currentBlockNotes); // 상행
-            notesToPlay.push(...currentBlockNotes.slice().reverse()); // 하행
+            notesToPlay.push(...currentBlockNotes);
+            notesToPlay.push(...currentBlockNotes.slice().reverse());
         });
 
         notesToPlayRef.current = notesToPlay;
@@ -97,30 +162,38 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
 
         const timeUntilNextBeat = getTimeUntilNextBeat(settings.bpm);
 
-        clockRef.current = new Tone.Clock((time) => {
-            if (indexRef.current >= notesToPlayRef.current.length) {
-                clockRef.current?.stop();
-                setCurrentPlayingNotes(
-                    Array(6)
-                        .fill(null)
-                        .map(() => Array(12).fill(false))
+        const beatDuration = 60 / settings.bpm; // 한 박자(4분음표)의 길이
+        const noteInterval = beatDuration / settings.subdivision; // 노트 간 간격 (초 단위)
+
+        clockRef.current = new Tone.Clock(
+            (time) => {
+                if (indexRef.current >= notesToPlayRef.current.length) {
+                    clockRef.current?.stop();
+                    setCurrentPlayingNotes(
+                        Array(6)
+                            .fill(null)
+                            .map(() => Array(12).fill(false))
+                    );
+                    setIsPlaying(false);
+                    return;
+                }
+                const noteObj = notesToPlayRef.current[indexRef.current];
+                setCurrentPlayingNotes((prev) => {
+                    const newPositions = prev.map((row) =>
+                        row.map(() => false)
+                    );
+                    newPositions[noteObj.rowIndex][noteObj.colIndex] = true;
+                    return newPositions;
+                });
+                synthRef.current?.triggerAttackRelease(
+                    noteObj.note,
+                    `${noteInterval}s`, // 노트 길이
+                    time
                 );
-                setIsPlaying(false);
-                return;
-            }
-            const noteObj = notesToPlayRef.current[indexRef.current];
-            setCurrentPlayingNotes((prev) => {
-                const newPositions = prev.map((row) => row.map(() => false));
-                newPositions[noteObj.rowIndex][noteObj.colIndex] = true;
-                return newPositions;
-            });
-            synthRef.current?.triggerAttackRelease(
-                noteObj.note,
-                '8n',
-                time
-            );
-            indexRef.current += 1;
-        }, (settings.bpm / 60 * 4));
+                indexRef.current += 1;
+            },
+            1 / noteInterval // 역수 취하여 Hz 단위로 변환
+        );
 
         clockRef.current.start(Tone.now() + timeUntilNextBeat);
     };
@@ -149,10 +222,20 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     Stop
                 </Button>
                 <ToggleSwitch>
-                    <HiddenCheckbox checked={isMetronomePlaying} onChange={handleMetronomeToggle} />
+                    <HiddenCheckbox
+                        checked={isMetronomePlaying}
+                        onChange={handleMetronomeToggle}
+                    />
                     <Slider isPlaying={isMetronomePlaying} />
                 </ToggleSwitch>
             </ButtonContainer>
+            {settings.scale !== "Chromatic" && (
+                <BlockSelector
+                    selectedBlock={selectedBlock}
+                    setSelectedBlock={setSelectedBlock}
+                    availableBlocks={availableBlocks}
+                />
+            )}
             <Fretboard
                 currentPlayingNotes={currentPlayingNotes}
                 scaleNotes={getScaleNotesForSettings(
@@ -160,10 +243,12 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     settings.key
                 )}
                 rootNote={settings.key}
+                selectedBlock={selectedBlock}
+                blockNumbers={blockNumbers}
+                scale={settings.scale}
             />
         </Container>
     );
 };
-
 
 export default ScalePlayer;

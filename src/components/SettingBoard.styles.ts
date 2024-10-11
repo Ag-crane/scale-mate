@@ -32,8 +32,7 @@ const Button = styled.button`
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    cursor: pointer;
-    border: none;
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};    border: none;
     border-radius: 5px;
     background-color: rgb(40, 44, 52, 0.5);
     color: white;

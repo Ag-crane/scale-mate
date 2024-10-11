@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { keys, scales } from "../data/constants";
+import { keys, scales, subdivisionOptions } from "../data/constants";
 import { Button, Container, Input, Label, Select } from "./SettingBoard.styles";
 
 interface SettingBoardProps {
@@ -7,6 +7,7 @@ interface SettingBoardProps {
         bpm: number;
         scale: string;
         key: string;
+        subdivision: number;
     };
     onSettingsChange: (
         newSettings: Partial<{ bpm: number; scale: string; key: string }>
@@ -17,21 +18,27 @@ interface SettingBoardProps {
 const SettingBoard: React.FC<SettingBoardProps> = ({
     settings,
     onSettingsChange,
-    onSave, // Save 버튼 클릭 시 호출되는 함수
+    onSave,
 }) => {
-    const [tempSettings, setTempSettings] = useState(settings); // 임시 상태로 초기화
+    const [tempSettings, setTempSettings] = useState(settings);
 
-    // settings가 변경될 때 tempSettings를 업데이트
+    const isSaveDisabled =
+        tempSettings.scale !== "Chromatic" && tempSettings.key === "";
+
     useEffect(() => {
-        setTempSettings(settings); // 외부에서 settings가 변경되면 tempSettings도 업데이트
+        setTempSettings(settings);
     }, [settings]);
 
     const handleScaleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setTempSettings({ ...tempSettings, scale: event.target.value, key: '-' }); // 스케일 변경 시 key를 '-'로 설정
+        setTempSettings({
+            ...tempSettings,
+            scale: event.target.value,
+            key: "",
+        });
     };
 
     const handleKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value === '-' ? '' : event.target.value; // '-'일 때는 빈 문자열로 변환
+        const value = event.target.value === "-" ? "" : event.target.value; // '-'일 때는 빈 문자열로 변환
         setTempSettings({ ...tempSettings, key: value });
     };
 
@@ -40,16 +47,29 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
         setTempSettings({ ...tempSettings, bpm: Number(value) || 0 });
     };
 
+    const handleSubdivisionChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        const subdivision = Number(event.target.value);
+        setTempSettings({ ...tempSettings, subdivision });
+    };
+
     const handleSave = () => {
-        onSettingsChange(tempSettings); // Save 버튼을 눌렀을 때 설정 변경 사항 반영
-        onSave(); // 재생 중이던 노트를 초기화하는 함수 호출
+        if (!isSaveDisabled) {
+            onSettingsChange(tempSettings);
+            onSave();
+        }
     };
 
     return (
         <Container>
             <div style={{ marginBottom: "20px" }}>
                 <Label htmlFor="scale">Scale : </Label>
-                <Select id="scale" value={tempSettings.scale} onChange={handleScaleChange}>
+                <Select
+                    id="scale"
+                    value={tempSettings.scale}
+                    onChange={handleScaleChange}
+                >
                     {scales.map((scale: string, index: number) => (
                         <option key={index} value={scale}>
                             {scale}
@@ -57,17 +77,26 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     ))}
                 </Select>
             </div>
+            {tempSettings.scale !== "Chromatic" && (
+                <div style={{ marginBottom: "20px" }}>
+                    <Label htmlFor="key">Key : </Label>
+                    <Select
+                        id="key"
+                        value={tempSettings.key}
+                        onChange={handleKeyChange}
+                    >
+                        {keys.map((key: string, index: number) => (
+                            <option key={index} value={key}>
+                                {key}
+                            </option>
+                        ))}
+                    </Select>
+                    {isSaveDisabled && (
+                        <p style={{ color: "red" }}>Please select a key</p>
+                    )}
+                </div>
+            )}
             <div style={{ marginBottom: "20px" }}>
-                <Label htmlFor="key">Key : </Label>
-                <Select id="key" value={tempSettings.key} onChange={handleKeyChange} disabled={tempSettings.scale === "Chromatic"}>
-                    {keys.map((key: string, index: number) => (
-                        <option key={index} value={key}>
-                            {key}
-                        </option>
-                    ))}
-                </Select>
-            </div>
-            <div>
                 <Label htmlFor="bpm">BPM : </Label>
                 <Input
                     type="number"
@@ -78,7 +107,23 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     max="240"
                 />
             </div>
-            <Button onClick={handleSave}>Save</Button>
+            <div>
+                <Label htmlFor="subdivision">Subdivision :</Label>
+                <Select
+                    id="subdivision"
+                    value={tempSettings.subdivision}
+                    onChange={handleSubdivisionChange}
+                >
+                    {subdivisionOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </Select>
+            </div>
+            <Button disabled={isSaveDisabled} onClick={handleSave}>
+                Save
+            </Button>
         </Container>
     );
 };
