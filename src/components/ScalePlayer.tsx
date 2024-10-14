@@ -58,6 +58,14 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         setIsMetronomePlaying(!isMetronomePlaying);
     };
 
+    const togglePlayStop = () => {
+        if (isPlaying) {
+            stopScale();
+        } else {
+            playScale();
+        }
+    }
+
     const togglePlaybackMode = () => {
         setIsRepeat((prev) => !prev); // '한번만 재생' <-> '반복 재생' 모드 토글
     };
@@ -65,11 +73,8 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
     return (
         <Container>
             <ButtonContainer>
-                <Button onClick={playScale} disabled={isPlaying}>
-                    Play
-                </Button>
-                <Button onClick={stopScale} disabled={!isPlaying}>
-                    Stop
+                <Button onClick={togglePlayStop}>
+                    {isPlaying ? "Stop" : "Play"}
                 </Button>
                 <Button onClick={togglePlaybackMode}>
                     {isRepeat ? "Repeat Off" : "Repeat On"}
