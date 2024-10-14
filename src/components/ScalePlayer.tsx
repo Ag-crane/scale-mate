@@ -40,6 +40,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
     }, [settings.scale, settings.key]);
 
     const [selectedBlock, setSelectedBlock] = useState<number | null>(null);
+    const [isRepeat, setIsRepeat] = useState(false);
 
     // 블록 관련 데이터 처리 로직
     const { blockRanges, blockNumbers } = useBlockData(settings);
@@ -50,10 +51,15 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         setCurrentPlayingNotes, 
         setIsPlaying, 
         selectedBlock,
+        isRepeat
     );
 
     const handleMetronomeToggle = () => {
         setIsMetronomePlaying(!isMetronomePlaying);
+    };
+
+    const togglePlaybackMode = () => {
+        setIsRepeat((prev) => !prev); // '한번만 재생' <-> '반복 재생' 모드 토글
     };
 
     return (
@@ -64,6 +70,9 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                 </Button>
                 <Button onClick={stopScale} disabled={!isPlaying}>
                     Stop
+                </Button>
+                <Button onClick={togglePlaybackMode}>
+                    {isRepeat ? "Repeat Off" : "Repeat On"}
                 </Button>
                 <ToggleSwitch>
                     <HiddenCheckbox

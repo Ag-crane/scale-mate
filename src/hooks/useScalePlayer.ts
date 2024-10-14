@@ -22,11 +22,17 @@ export const useScalePlayer = (
     setCurrentPlayingNotes: React.Dispatch<React.SetStateAction<boolean[][]>>,
     setIsPlaying: (isPlaying: boolean) => void,
     selectedBlock: number | null,
+    isRepeat: boolean
 ) => {
     const indexRef = useRef(0);
     const synthRef = useRef<Tone.Synth | null>(null);
     const clockRef = useRef<Tone.Clock | null>(null);
     const notesToPlayRef = useRef<NoteToPlay[]>([]);
+    const isRepeatRef = useRef(isRepeat);
+
+    useEffect(() => {
+        isRepeatRef.current = isRepeat;
+    }, [isRepeat]);
 
     useEffect(() => {
         synthRef.current = new Tone.Synth().toDestination();
@@ -106,14 +112,12 @@ export const useScalePlayer = (
         clockRef.current = new Tone.Clock(
             (time) => {
                 if (indexRef.current >= notesToPlayRef.current.length) {
-                    clockRef.current?.stop();
-                    setCurrentPlayingNotes(
-                        Array(6)
-                            .fill(null)
-                            .map(() => Array(12).fill(false))
-                    );
-                    setIsPlaying(false);
-                    return;
+                    if (isRepeatRef.current) { // 최신 isRepeat 값을 사용
+                        indexRef.current = 0; // 반복 재생일 경우 다시 처음으로
+                    } else {
+                        stopScale(); // 반복 재생이 아닐 경우 멈춤
+                        return;
+                    }
                 }
                 const noteObj = notesToPlayRef.current[indexRef.current];
                 setCurrentPlayingNotes((prev) => {
