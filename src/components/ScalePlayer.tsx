@@ -9,7 +9,7 @@ import {
 } from "./ScalePlayer.styles";
 import {
     PiPlayFill,
-    PiPauseFill,
+    PiStopFill,
     PiRepeatBold,
     PiRepeatOnceBold,
 } from "react-icons/pi";
@@ -81,7 +81,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
             <ButtonContainer>
                 <Button onClick={togglePlayStop}>
                     {isPlaying ? (
-                        <PiPauseFill size={20} />
+                        <PiStopFill size={20} />
                     ) : (
                         <PiPlayFill size={20} />
                     )}
