@@ -12,7 +12,9 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-    padding: 10px 20px;
+    width: 50px;
+    height: 40px;
+    border: #ccc 1px solid;
 `;
 
 const ToggleSwitch = styled.label`

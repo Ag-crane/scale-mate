@@ -7,6 +7,12 @@ import {
     Slider,
     ToggleSwitch,
 } from "./ScalePlayer.styles";
+import {
+    PiPlayFill,
+    PiPauseFill,
+    PiRepeatBold,
+    PiRepeatOnceBold,
+} from "react-icons/pi";
 import Fretboard from "./Fretboard";
 import BlockSelector from "./BlockSelector";
 import { useBlockData } from "../hooks/useBlockData";
@@ -47,9 +53,9 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
 
     // Tone.js 활용한 재생/정지 로직
     const { playScale, stopScale } = useScalePlayer(
-        settings, 
-        setCurrentPlayingNotes, 
-        setIsPlaying, 
+        settings,
+        setCurrentPlayingNotes,
+        setIsPlaying,
         selectedBlock,
         isRepeat
     );
@@ -64,7 +70,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         } else {
             playScale();
         }
-    }
+    };
 
     const togglePlaybackMode = () => {
         setIsRepeat((prev) => !prev); // '한번만 재생' <-> '반복 재생' 모드 토글
@@ -74,10 +80,18 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         <Container>
             <ButtonContainer>
                 <Button onClick={togglePlayStop}>
-                    {isPlaying ? "Stop" : "Play"}
+                    {isPlaying ? (
+                        <PiPauseFill size={20} />
+                    ) : (
+                        <PiPlayFill size={20} />
+                    )}
                 </Button>
                 <Button onClick={togglePlaybackMode}>
-                    {isRepeat ? "Repeat Off" : "Repeat On"}
+                    {isRepeat ? (
+                        <PiRepeatBold size={22} />
+                    ) : (
+                        <PiRepeatOnceBold size={22} />
+                    )}
                 </Button>
                 <ToggleSwitch>
                     <HiddenCheckbox
