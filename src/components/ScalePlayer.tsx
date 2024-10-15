@@ -106,6 +106,7 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     selectedBlock={selectedBlock}
                     setSelectedBlock={setSelectedBlock}
                     availableBlocks={blockRanges.map((_, i) => i + 1)}
+                    isPlaying={isPlaying}
                 />
             )}
             <Fretboard

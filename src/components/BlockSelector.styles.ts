@@ -31,6 +31,11 @@ const BlockButton = styled.button<{ isSelected: boolean }>`
     &:active {
         transform: translateY(0);
     }
+
+    &:disabled {
+        cursor: not-allowed;
+        transform: none;
+    }
 `;
 
 export { BlockSelectorContainer, BlockButton };

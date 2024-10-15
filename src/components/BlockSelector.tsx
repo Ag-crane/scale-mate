@@ -5,18 +5,22 @@ interface BlockSelectorProps {
     selectedBlock: number | null;
     setSelectedBlock: (block: number | null) => void;
     availableBlocks: number[];
+    isPlaying: boolean;
 }
 
 const BlockSelector: React.FC<BlockSelectorProps> = ({
     selectedBlock,
     setSelectedBlock,
     availableBlocks,
+    isPlaying,
 }) => {
+
     return (
         <BlockSelectorContainer>
             <BlockButton
                 isSelected={selectedBlock === null}
-                onClick={() => setSelectedBlock(null)} // null을 선택하면 전체 스케일이 재생됨
+                onClick={() => setSelectedBlock(null)}
+                disabled={isPlaying}
             >
                 Full
             </BlockButton>
@@ -25,6 +29,7 @@ const BlockSelector: React.FC<BlockSelectorProps> = ({
                     key={block}
                     isSelected={selectedBlock === block}
                     onClick={() => setSelectedBlock(block)}
+                    disabled={isPlaying}
                 >
                     {block}
                 </BlockButton>
