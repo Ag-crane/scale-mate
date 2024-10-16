@@ -9,12 +9,8 @@ const BlockSelectorContainer = styled.div`
 
 const BlockButton = styled.button<{ isSelected: boolean }>`
     padding: 10px 20px;
-    background-color: ${({ isSelected }) =>
-        isSelected ? "#4a90e2" : "#ccc"};
-    color: ${({ isSelected }) =>
-        isSelected
-            ? "#fff"
-            : "#333"};
+    background-color: ${({ isSelected }) => (isSelected ? "#4a90e2" : "#ccc")};
+    color: ${({ isSelected }) => (isSelected ? "#fff" : "#333")};
     border: none;
     border-radius: 5px;
     cursor: pointer;

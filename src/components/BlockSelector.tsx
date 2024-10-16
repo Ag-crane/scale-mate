@@ -14,7 +14,6 @@ const BlockSelector: React.FC<BlockSelectorProps> = ({
     availableBlocks,
     isPlaying,
 }) => {
-
     return (
         <BlockSelectorContainer>
             <BlockButton

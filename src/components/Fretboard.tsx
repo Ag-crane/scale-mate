@@ -27,7 +27,7 @@ const Fretboard: React.FC<FretboardProps> = ({
     blockNumbers,
     scale,
 }) => {
-    const stringThickness = [4.42, 3.5, 2.67, 2, 1.33, 1]; // 6번 줄부터 1번 줄까지 줄의 두께 (px 단위)
+    const stringThickness = [4.42, 3.5, 2.67, 2, 1.33, 1];
     const maxFret = scale === "Chromatic" ? 12 : 16;
 
     return (
