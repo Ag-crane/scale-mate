@@ -18,6 +18,7 @@ import BlockSelector from "./BlockSelector";
 import { useBlockData } from "../hooks/useBlockData";
 import { useScalePlayer } from "../hooks/useScalePlayer";
 import { getScaleNotesForSettings } from "../utils/scales";
+import VolumeControl from "./VolumeControl";
 
 interface ScalePlayerProps {
     settings: {
@@ -47,17 +48,19 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
 
     const [selectedBlock, setSelectedBlock] = useState<number | null>(null);
     const [isRepeat, setIsRepeat] = useState(false);
+    const [synthVolume, setSynthVolume] = useState(-12);
 
     // 블록 관련 데이터 처리 로직
     const { blockRanges, blockNumbers } = useBlockData(settings);
 
     // Tone.js 활용한 재생/정지 로직
-    const { playScale, stopScale } = useScalePlayer(
+    const { playScale, stopScale, setSynthVolume: updateVolume } = useScalePlayer(
         settings,
         setCurrentPlayingNotes,
         setIsPlaying,
         selectedBlock,
-        isRepeat
+        isRepeat,
+        synthVolume
     );
 
     const handleMetronomeToggle = () => {
@@ -74,6 +77,11 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
 
     const togglePlaybackMode = () => {
         setIsRepeat((prev) => !prev); // '한번만 재생' <-> '반복 재생' 모드 토글
+    };
+
+    const handleVolumeChange = (volume: number) => {
+        setSynthVolume(volume);
+        updateVolume(volume);
     };
 
     return (
@@ -93,6 +101,10 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                         <PiRepeatOnceBold size={22} />
                     )}
                 </Button>
+                <VolumeControl
+                    initialVolume={synthVolume}
+                    onVolumeChange={handleVolumeChange}
+                />
                 <ToggleSwitch>
                     <HiddenCheckbox
                         checked={isMetronomePlaying}

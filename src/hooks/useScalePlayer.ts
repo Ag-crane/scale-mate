@@ -22,7 +22,8 @@ export const useScalePlayer = (
     setCurrentPlayingNotes: React.Dispatch<React.SetStateAction<boolean[][]>>,
     setIsPlaying: (isPlaying: boolean) => void,
     selectedBlock: number | null,
-    isRepeat: boolean
+    isRepeat: boolean,
+    synthVolume: number
 ) => {
     const indexRef = useRef(0);
     const synthRef = useRef<Tone.Synth | null>(null);
@@ -49,12 +50,23 @@ export const useScalePlayer = (
             },
         }).connect(eq);
 
+        if (synthRef.current) {
+            synthRef.current.volume.value = synthVolume;
+        }
+
         return () => {
             clockRef.current?.stop();
             clockRef.current?.dispose();
             synthRef.current?.dispose();
         };
     }, []);
+
+    // 볼륨 조정 함수를 추가
+    const setSynthVolume = (volume: number) => {
+        if (synthRef.current) {
+            synthRef.current.volume.value = volume;
+        }
+    };
 
     const playScale = async () => {
         setIsPlaying(true);
@@ -163,5 +175,5 @@ export const useScalePlayer = (
         );
     };
 
-    return { playScale, stopScale };
+    return { playScale, stopScale, setSynthVolume };
 };
