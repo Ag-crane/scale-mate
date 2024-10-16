@@ -68,6 +68,7 @@ const Fretboard: React.FC<FretboardProps> = ({
                                     isRootNote={isRootNote}
                                     selectedBlock={selectedBlock}
                                     blockNumber={blockNumber}
+                                    fretIndex={colIndex}
                                 >
                                     <div>{note.replace(/[0-9]/g, "")}</div>
                                 </Note>

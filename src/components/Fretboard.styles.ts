@@ -63,6 +63,10 @@ const NoteRow = styled.div`
     position: relative;
 `;
 
+const fretWidths = [
+    100, 97, 94, 91, 88, 85, 82, 79, 76, 73, 70, 67, 64, 61, 58, 55
+]; 
+
 const Note = styled.div<{
     isActive?: boolean;
     isOpenNote?: boolean;
@@ -70,8 +74,9 @@ const Note = styled.div<{
     isRootNote?: boolean;
     selectedBlock: number | null;
     blockNumber: (number | null)[];
+    fretIndex: number;
 }>`
-    flex: 1;
+    flex: ${({ fretIndex }) => fretWidths[fretIndex] || 45}%;
     display: flex;
     justify-content: center;
     align-items: center;
