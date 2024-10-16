@@ -9,19 +9,18 @@ const GuitarContainer = styled.div`
 const FretboardContainer = styled.div`
     display: flex;
     flex-direction: column-reverse;
-    border: 2px solid black;
     width: 950px;
     height: 240px;
     margin: 20px;
+    margin-left: 10px;
     padding: 10px 0px;
-    background-color: #a0522d;
+    background-color: #6a4e42;
     border-radius: 10px;
+    border-left: 15px solid #dcb47f;
 `;
-
 const OpenNotesContainer = styled.div`
     display: flex;
     flex-direction: column-reverse;
-    margin-right: 10px;
     height: 240px;
 `;
 
@@ -36,22 +35,32 @@ const OpenNote = styled.div`
     font-size: 12px;
 
     & > div {
-        background-color: #753c24;
+        border: 1px dashed #6a4e42;
         border-radius: 50%;
         width: 28px;
         height: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: white;
+        color: black;
     }
 
     border-right: none;
 `;
 
+const GuitarString = styled.div<{ thickness: number }>`
+    position: absolute;
+    width: 100%;
+    height: ${({ thickness }) => thickness}px;
+    background-color: #A9A9A9;
+    left: 0;
+    top: 50%;
+`;
+
 const NoteRow = styled.div`
     display: flex;
     height: 40px;
+    position: relative;
 `;
 
 const Note = styled.div<{
@@ -67,9 +76,16 @@ const Note = styled.div<{
     justify-content: center;
     align-items: center;
     height: 100%;
-    color: black;
-    font-weight: bold;
-    font-size: 12px;
+    border-right: 2px solid lightgray;
+    z-index: 2;
+
+    &:first-child {
+        border-left: none;
+    }
+
+    &:last-child {
+        border-right: none;
+    }
 
     & > div {
         background-color: ${({ isActive, isScaleNote, isRootNote }) =>
@@ -85,20 +101,18 @@ const Note = styled.div<{
         border-radius: 50%;
         width: 28px;
         height: 28px;
+        font-size: 12px;
+        font-weight: bold;
         display: flex;
         justify-content: center;
         align-items: center;
         opacity: ${({ isScaleNote, blockNumber, selectedBlock }) => {
             if (!isScaleNote) return 0; // 스케일에 속하지 않는 노트는 보이지 않음
             if (selectedBlock === null) return 1; // 선택된 블록이 없으면
-            return blockNumber.includes(selectedBlock) ? 1 : 0.3; // 선택된 블록에 속하는지 확인
+            return blockNumber.includes(selectedBlock) ? 1 : 0.2
+            ; // 선택된 블록에 속하는지 확인
         }};
-    }
-
-    border-right: "2px solid silver";
-
-    &:last-child {
-        border-right: none;
+        z-index: 3;
     }
 `;
 
@@ -109,4 +123,5 @@ export {
     OpenNote,
     NoteRow,
     Note,
+    GuitarString,
 };

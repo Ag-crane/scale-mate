@@ -3,6 +3,7 @@ import { fretboard, openNotes } from "../data/constants";
 import {
     FretboardContainer,
     GuitarContainer,
+    GuitarString,
     Note,
     NoteRow,
     OpenNote,
@@ -26,6 +27,7 @@ const Fretboard: React.FC<FretboardProps> = ({
     blockNumbers,
     scale,
 }) => {
+    const stringThickness = [4.42, 3.5, 2.67, 2, 1.33, 1]; // 6번 줄부터 1번 줄까지 줄의 두께 (px 단위)
     const maxFret = scale === "Chromatic" ? 12 : 16;
 
     return (
@@ -40,6 +42,9 @@ const Fretboard: React.FC<FretboardProps> = ({
             <FretboardContainer>
                 {fretboard.map((row: string[], rowIndex: number) => (
                     <NoteRow key={rowIndex}>
+                        <GuitarString
+                            thickness={stringThickness[rowIndex]*1.3}
+                        />
                         {row.map((note: string, colIndex: number) => {
                             if (colIndex >= maxFret) return null;
 
