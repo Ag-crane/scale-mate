@@ -35,7 +35,19 @@ export const useScalePlayer = (
     }, [isRepeat]);
 
     useEffect(() => {
-        synthRef.current = new Tone.Synth().toDestination();
+        const eq = new Tone.EQ3(0, -10, 0).toDestination(); // 저음역대와 고음역대 줄임
+
+        synthRef.current = new Tone.Synth({
+            oscillator: {
+                type: "triangle", // 기본 파형 설정
+            },
+            envelope: {
+                attack: 0.01,
+                decay: 0.2,
+                sustain: 0.8,
+                release: 1.2,
+            },
+        }).connect(eq);
 
         return () => {
             clockRef.current?.stop();
@@ -112,7 +124,8 @@ export const useScalePlayer = (
         clockRef.current = new Tone.Clock(
             (time) => {
                 if (indexRef.current >= notesToPlayRef.current.length) {
-                    if (isRepeatRef.current) { // 최신 isRepeat 값을 사용
+                    if (isRepeatRef.current) {
+                        // 최신 isRepeat 값을 사용
                         indexRef.current = 0; // 반복 재생일 경우 다시 처음으로
                     } else {
                         stopScale(); // 반복 재생이 아닐 경우 멈춤
