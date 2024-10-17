@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
-import { Container, Pendulum } from "./Metronome.styles";
+import {
+    Container,
+    HiddenCheckbox,
+    Pendulum,
+    Slider,
+    ToggleSwitch,
+} from "./Metronome.styles";
 import { getTimeUntilNextBeat } from "../utils/getTimeUntilNextBeat";
 import backgroundImage from "../assets/metronome.png";
 
 interface MetronomeProps {
     bpm: number;
-    isPlaying: boolean;
 }
 
-const Metronome: React.FC<MetronomeProps> = ({ bpm, isPlaying }) => {
+const Metronome: React.FC<MetronomeProps> = ({ bpm }) => {
+    const [isPlaying, setIsPlaying] = useState(false);
     const [tick, setTick] = useState(0);
     const synthRef = useRef<Tone.Synth | null>(null);
     const clockRef = useRef<Tone.Clock | null>(null);
@@ -64,8 +70,19 @@ const Metronome: React.FC<MetronomeProps> = ({ bpm, isPlaying }) => {
         }
     }, [isPlaying, bpm]);
 
+    const handleMetronomeToggle = () => {
+        setIsPlaying(!isPlaying);
+    };
+
     return (
         <Container backgroundImage={backgroundImage}>
+            <ToggleSwitch>
+                <HiddenCheckbox
+                    checked={isPlaying}
+                    onChange={handleMetronomeToggle}
+                />
+                <Slider isPlaying={isPlaying} />
+            </ToggleSwitch>
             <Pendulum isPlaying={isPlaying} tick={tick} bpm={bpm} />
         </Container>
     );

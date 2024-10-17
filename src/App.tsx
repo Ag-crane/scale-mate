@@ -25,8 +25,6 @@ const App: React.FC = () => {
             .map(() => Array(12).fill(false))
     );
 
-    const [isMetronomePlaying, setIsMetronomePlaying] = useState(false);
-
     const handleSettingsChange = (newSettings: Partial<typeof settings>) => {
         setSettings((prevSettings) => ({
             ...prevSettings,
@@ -67,10 +65,7 @@ const App: React.FC = () => {
                     />
                 </SettingBoardContainer>
                 <MetronomeContainer>
-                    <Metronome
-                        bpm={settings.bpm}
-                        isPlaying={isMetronomePlaying}
-                    />
+                    <Metronome bpm={settings.bpm} />
                 </MetronomeContainer>
             </MainContainer>
             <ScalePlayerContainer>
@@ -78,8 +73,6 @@ const App: React.FC = () => {
                     settings={settings}
                     currentPlayingNotes={currentPlayingNotes}
                     setCurrentPlayingNotes={setCurrentPlayingNotes}
-                    isMetronomePlaying={isMetronomePlaying}
-                    setIsMetronomePlaying={setIsMetronomePlaying}
                 />
             </ScalePlayerContainer>
         </Container>

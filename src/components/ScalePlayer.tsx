@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-    Button,
-    ButtonContainer,
-    Container,
-    HiddenCheckbox,
-    Slider,
-    ToggleSwitch,
-} from "./ScalePlayer.styles";
+import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
 import {
     PiPlayFill,
     PiStopFill,
@@ -29,16 +22,12 @@ interface ScalePlayerProps {
     };
     currentPlayingNotes: boolean[][];
     setCurrentPlayingNotes: React.Dispatch<React.SetStateAction<boolean[][]>>;
-    isMetronomePlaying: boolean;
-    setIsMetronomePlaying: (isPlaying: boolean) => void;
 }
 
 const ScalePlayer: React.FC<ScalePlayerProps> = ({
     settings,
     currentPlayingNotes,
     setCurrentPlayingNotes,
-    isMetronomePlaying,
-    setIsMetronomePlaying,
 }) => {
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -54,7 +43,11 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
     const { blockRanges, blockNumbers } = useBlockData(settings);
 
     // Tone.js 활용한 재생/정지 로직
-    const { playScale, stopScale, setSynthVolume: updateVolume } = useScalePlayer(
+    const {
+        playScale,
+        stopScale,
+        setSynthVolume: updateVolume,
+    } = useScalePlayer(
         settings,
         setCurrentPlayingNotes,
         setIsPlaying,
@@ -62,10 +55,6 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
         isRepeat,
         synthVolume
     );
-
-    const handleMetronomeToggle = () => {
-        setIsMetronomePlaying(!isMetronomePlaying);
-    };
 
     const togglePlayStop = () => {
         if (isPlaying) {
@@ -105,13 +94,6 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     initialVolume={synthVolume}
                     onVolumeChange={handleVolumeChange}
                 />
-                <ToggleSwitch>
-                    <HiddenCheckbox
-                        checked={isMetronomePlaying}
-                        onChange={handleMetronomeToggle}
-                    />
-                    <Slider isPlaying={isMetronomePlaying} />
-                </ToggleSwitch>
             </ButtonContainer>
             {settings.scale !== "Chromatic" && (
                 <BlockSelector
