@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const GuitarContainer = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
@@ -9,15 +10,14 @@ const GuitarContainer = styled.div`
 const FretboardContainer = styled.div`
     display: flex;
     flex-direction: column-reverse;
-    width: 950px;
+    width: 1000px;
     height: 240px;
-    margin: 20px;
-    margin-left: 10px;
     padding: 10px 0px;
     background-color: #6a4e42;
     border-radius: 5px;
     border-left: 15px solid #dcb47f;
 `;
+
 const OpenNotesContainer = styled.div`
     display: flex;
     flex-direction: column-reverse;
@@ -33,6 +33,7 @@ const OpenNote = styled.div`
     color: white;
     font-weight: bold;
     font-size: 12px;
+    margin-right: 10px;
 
     & > div {
         border: 1px dashed #6a4e42;
@@ -63,10 +64,6 @@ const NoteRow = styled.div`
     position: relative;
 `;
 
-const fretWidths = [
-    100, 97, 94, 91, 88, 85, 82, 79, 76, 73, 70, 67, 64, 61, 58, 55,
-];
-
 const Note = styled.div<{
     isActive?: boolean;
     isOpenNote?: boolean;
@@ -74,9 +71,13 @@ const Note = styled.div<{
     isRootNote?: boolean;
     selectedBlock: number | null;
     blockNumber: (number | null)[];
+    fretWidths: number[];
     fretIndex: number;
 }>`
-    flex: ${({ fretIndex }) => fretWidths[fretIndex] || 45}%;
+    box-sizing: border-box;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: ${({ fretWidths, fretIndex }) => fretWidths[fretIndex] || 6}%;
     display: flex;
     justify-content: center;
     align-items: center;
