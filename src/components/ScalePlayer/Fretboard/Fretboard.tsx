@@ -1,5 +1,5 @@
 import React from "react";
-import { fretboard, openNotes } from "../data/constants";
+import { fretboard, openNotes } from "../../../data/constants";
 import {
     FretboardContainer,
     GuitarContainer,
@@ -9,7 +9,7 @@ import {
     OpenNote,
     OpenNotesContainer,
 } from "./Fretboard.styles";
-import PositionMark from "./PositionMark";
+import PositionMark from "./PositionMark/PositionMark";
 
 interface FretboardProps {
     currentPlayingNotes: boolean[][];
@@ -101,11 +101,11 @@ const Fretboard: React.FC<FretboardProps> = ({
                         ))}
                     </FretboardContainer>
                 </div>
-                    <PositionMark
-                        normalizedFretWidths={normalizedFretWidths}
-                        positionMarkFrets={positionMarkFrets}
-                        maxFret={maxFret}
-                    />
+                <PositionMark
+                    normalizedFretWidths={normalizedFretWidths}
+                    positionMarkFrets={positionMarkFrets}
+                    maxFret={maxFret}
+                />
             </GuitarContainer>
         </>
     );

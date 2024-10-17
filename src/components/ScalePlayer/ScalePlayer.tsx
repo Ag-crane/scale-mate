@@ -6,12 +6,12 @@ import {
     PiRepeatBold,
     PiRepeatOnceBold,
 } from "react-icons/pi";
-import Fretboard from "./Fretboard";
-import BlockSelector from "./BlockSelector";
-import { useBlockData } from "../hooks/useBlockData";
-import { useScalePlayer } from "../hooks/useScalePlayer";
-import { getScaleNotesForSettings } from "../utils/scales";
-import VolumeControl from "./VolumeControl";
+import Fretboard from "./../ScalePlayer/Fretboard/Fretboard";
+import BlockSelector from "./BlockSelector/BlockSelector"; 
+import { useBlockData } from "../../hooks/useBlockData";
+import { useScalePlayer } from "../../hooks/useScalePlayer";
+import { getScaleNotesForSettings } from "../../utils/scales";
+import VolumeControl from "../ScalePlayer/VolumeControl/VolumeControl";
 
 interface ScalePlayerProps {
     settings: {

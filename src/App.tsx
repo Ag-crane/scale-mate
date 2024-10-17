@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import SettingBoard from "./components/SettingBoard";
-import ScalePlayer from "./components/ScalePlayer";
-import Metronome from "./components/Metronome";
+import SettingBoard from "./components/SettingBoard/SettingBoard";
+import ScalePlayer from "./components/ScalePlayer/ScalePlayer";
+import Metronome from "./components/Metronome/Metronome";
 import {
     Container,
     Header,

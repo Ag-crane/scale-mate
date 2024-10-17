@@ -7,8 +7,8 @@ import {
     Slider,
     ToggleSwitch,
 } from "./Metronome.styles";
-import { getTimeUntilNextBeat } from "../utils/getTimeUntilNextBeat";
-import backgroundImage from "../assets/metronome.png";
+import { getTimeUntilNextBeat } from "../../utils/getTimeUntilNextBeat";
+import backgroundImage from "../../assets/metronome.png";
 
 interface MetronomeProps {
     bpm: number;
