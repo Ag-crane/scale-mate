@@ -11,6 +11,7 @@ import {
     SettingBoardContainer,
 } from "./App.styles";
 import { start } from "tone";
+import { initChannelTalk } from "./utils/initChannelTalk";
 
 const App: React.FC = () => {
     const [settings, setSettings] = useState({
@@ -51,6 +52,15 @@ const App: React.FC = () => {
             await start();
         };
         startTone();
+
+        // 채널톡 시작
+        initChannelTalk();
+
+        return () => {
+          if (window.ChannelIO) {
+            window.ChannelIO('shutdown');
+          }
+        };
     }, []);
 
     return (
