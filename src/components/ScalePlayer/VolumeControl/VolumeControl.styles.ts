@@ -7,9 +7,10 @@ const VolumeControlContainer = styled.div`
     margin: 10px 0;
 `;
 
-const VolumeLabel = styled.label`
-    font-size: 14px;
+const VolumeIcon = styled.div`
+    font-size: 24px;
     color: #333;
+    cursor: pointer;
     margin-bottom: 5px;
 `;
 
@@ -46,4 +47,4 @@ const VolumeSlider = styled.input.attrs({ type: "range" })`
     }
 `;
 
-export { VolumeControlContainer, VolumeLabel, VolumeSlider };
+export { VolumeControlContainer, VolumeIcon, VolumeSlider };
