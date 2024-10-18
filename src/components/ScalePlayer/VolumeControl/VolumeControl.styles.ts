@@ -4,14 +4,13 @@ const VolumeControlContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px 0;
+    /* margin: 10px 0; */
 `;
 
 const VolumeIcon = styled.div`
     font-size: 24px;
     color: #333;
     cursor: pointer;
-    margin-bottom: 5px;
 `;
 
 const VolumeSlider = styled.input.attrs({ type: "range" })`
