@@ -7,7 +7,7 @@ import {
     PiRepeatOnceBold,
 } from "react-icons/pi";
 import Fretboard from "./../ScalePlayer/Fretboard/Fretboard";
-import BlockSelector from "./BlockSelector/BlockSelector"; 
+import BlockSelector from "./BlockSelector/BlockSelector";
 import { useBlockData } from "../../hooks/useBlockData";
 import { useScalePlayer } from "../../hooks/useScalePlayer";
 import { getScaleNotesForSettings } from "../../utils/scales";
@@ -95,14 +95,12 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                     onVolumeChange={handleVolumeChange}
                 />
             </ButtonContainer>
-            {settings.scale !== "Chromatic" && (
-                <BlockSelector
-                    selectedBlock={selectedBlock}
-                    setSelectedBlock={setSelectedBlock}
-                    availableBlocks={blockRanges.map((_, i) => i + 1)}
-                    isPlaying={isPlaying}
-                />
-            )}
+            <BlockSelector
+                selectedBlock={selectedBlock}
+                setSelectedBlock={setSelectedBlock}
+                availableBlocks={blockRanges.map((_, i) => i + 1)}
+                isPlaying={isPlaying}
+            />
             <Fretboard
                 currentPlayingNotes={currentPlayingNotes}
                 scaleNotes={getScaleNotesForSettings(
