@@ -54,7 +54,7 @@ const ScalePlayerContainer = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     background-color: #ffffff;
-    padding: 20px;
+    padding: 20px 0;
 `;
 
 const Header = styled.div`
