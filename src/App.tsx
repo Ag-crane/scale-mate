@@ -1,70 +1,80 @@
-import React, { useState } from "react";
-import SettingBoard from "./components/SettingBoard";
-import ChromaticPlayer from "./components/ChromaticPlayer";
-import styled from "styled-components";
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f0f2f5;
-    padding: 20px;
-    padding-top: 60px; /* Header의 높이만큼 패딩 추가 */
-`;
-
-const SettingBoardContainer = styled.div`
-    margin-top: 20px;
-    width: 100%;
-    max-width: 1200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #ffffff;
-    padding: 20px;
-`;
-
-const ChromaticPlayerContainer = styled.div`
-    margin-top: 20px;
-    width: 100%;
-    max-width: 1200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #ffffff;
-    padding: 20px;
-`;
-
-const Header = styled.div`
-    background-color: #282c34;
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-`;
+import React, { useEffect, useState } from "react";
+import SettingBoard from "./components/SettingBoard/SettingBoard";
+import ScalePlayer from "./components/ScalePlayer/ScalePlayer";
+import Metronome from "./components/Metronome/Metronome";
+import {
+    Container,
+    Header,
+    MainContainer,
+    MetronomeContainer,
+    ScalePlayerContainer,
+    SettingBoardContainer,
+} from "./App.styles";
+import { start } from "tone";
 
 const App: React.FC = () => {
-    const scales = ["Chromatic", "Major", "Minor", "Major Pentatonic", "Minor Pentatonic"];
-    const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const [settings, setSettings] = useState({
+        bpm: 60,
+        scale: "Chromatic",
+        key: "",
+        subdivision: 1,
+    });
+    const [currentPlayingNotes, setCurrentPlayingNotes] = useState<boolean[][]>(
+        Array(6)
+            .fill(null)
+            .map(() => Array(12).fill(false))
+    );
 
-    const [bpm, setBpm] = useState<number>(120);
+    const handleSettingsChange = (newSettings: Partial<typeof settings>) => {
+        setSettings((prevSettings) => ({
+            ...prevSettings,
+            ...newSettings,
+            key:
+                newSettings.scale === "Chromatic"
+                    ? ""
+                    : newSettings.key || prevSettings.key,
+        }));
+    };
+
+    const handleSave = () => {
+        // Save 버튼을 누르면 현재 재생 중인 노트 상태를 초기화
+        setCurrentPlayingNotes(
+            Array(6)
+                .fill(null)
+                .map(() => Array(12).fill(false))
+        );
+    };
+
+    useEffect(() => {
+        // Tone.js 시작
+        const startTone = async () => {
+            await start();
+        };
+        startTone();
+    }, []);
 
     return (
         <Container>
             <Header>Scale Mate</Header>
-            <SettingBoardContainer>
-                <SettingBoard scales={scales} keys={keys} defaultBpm={bpm} onBpmChange={setBpm} />
-            </SettingBoardContainer>
-            <ChromaticPlayerContainer>
-                <ChromaticPlayer bpm={bpm} />
-            </ChromaticPlayerContainer>
+            <MainContainer>
+                <SettingBoardContainer>
+                    <SettingBoard
+                        settings={settings}
+                        onSettingsChange={handleSettingsChange}
+                        onSave={handleSave}
+                    />
+                </SettingBoardContainer>
+                <MetronomeContainer>
+                    <Metronome bpm={settings.bpm} />
+                </MetronomeContainer>
+            </MainContainer>
+            <ScalePlayerContainer>
+                <ScalePlayer
+                    settings={settings}
+                    currentPlayingNotes={currentPlayingNotes}
+                    setCurrentPlayingNotes={setCurrentPlayingNotes}
+                />
+            </ScalePlayerContainer>
         </Container>
     );
 };
