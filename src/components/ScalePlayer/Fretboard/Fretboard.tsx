@@ -10,6 +10,7 @@ import {
     OpenNotesContainer,
 } from "./Fretboard.styles";
 import PositionMark from "./PositionMark/PositionMark";
+import FretNumber from "./FretNumber/FretNumber";
 
 interface FretboardProps {
     currentPlayingNotes: boolean[][];
@@ -45,6 +46,7 @@ const Fretboard: React.FC<FretboardProps> = ({
     return (
         <>
             <GuitarContainer>
+                <FretNumber normalizedFretWidths={normalizedFretWidths} maxFret={maxFret} />
                 <div
                     style={{
                         display: "flex",
