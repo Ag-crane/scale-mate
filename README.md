@@ -1,7 +1,10 @@
 # [Scale Mate (2024.08.13 ~) ](https://scale-mate.vercel.app/)
 기타 연주자를 위한 스케일 연습 웹 애플리케이션
 
-## 프로젝트 개요
+## 데모
+![ScaleMate_Demo](https://github.com/user-attachments/assets/cd9d1a19-a492-49ca-960b-398bd1441dd4)
+
+## 개요
 기타 연주자들이 다양한 스케일을 연습할 수 있도록 돕는다.   
 가상 프렛보드와 메트로놈을 구현하여, 사용자 설정(스케일, key, bpm)에 따른 스케일 연주 시뮬레이션을 제공한다.
 
