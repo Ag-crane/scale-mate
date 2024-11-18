@@ -22,7 +22,7 @@ const PositionMark: React.FC<PositionMarkProps> = ({
             {normalizedFretWidths.slice(0, maxFret).map((width, index) => (
                 <PositionMarkWrapper key={index} width={width}>
                     {positionMarkFrets.includes(index + 1) && (
-                        <PositionMarkItem isDouble={index + 1 === 12} />
+                        <PositionMarkItem $isDouble={index + 1 === 12} />
                     )}
                 </PositionMarkWrapper>
             ))}
@@ -33,13 +33,13 @@ const PositionMark: React.FC<PositionMarkProps> = ({
 export default PositionMark;
 
 interface PositionMarkItemProps {
-    isDouble?: boolean;
+    $isDouble?: boolean;
 }
 
-const PositionMarkItem: React.FC<PositionMarkItemProps> = ({ isDouble }) => {
+const PositionMarkItem: React.FC<PositionMarkItemProps> = ({ $isDouble }) => {
     return (
-        <Container isDouble={isDouble}>
-            {isDouble ? (
+        <Container $isDouble={$isDouble}>
+            {$isDouble ? (
                 <>
                     <Dot />
                     <Dot />

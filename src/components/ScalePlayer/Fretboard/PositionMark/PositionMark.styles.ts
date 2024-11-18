@@ -21,9 +21,9 @@ const PositionMarkWrapper = styled.div<{ width: number }>`
     border-right: 2px solid lightgray;
 `;
 
-const Container = styled.div<{ isDouble?: boolean }>`
+const Container = styled.div<{ $isDouble?: boolean }>`
     display: flex;
-    flex-direction: ${({ isDouble }) => (isDouble ? "row" : "column")};
+    flex-direction: ${({ $isDouble }) => ($isDouble ? "row" : "column")};
     align-items: center;
     justify-content: center;
     position: relative;

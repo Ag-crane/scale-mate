@@ -65,7 +65,7 @@ const Fretboard: React.FC<FretboardProps> = ({
                         {fretboard.map((row: string[], rowIndex: number) => (
                             <NoteRow key={rowIndex}>
                                 <GuitarString
-                                    thickness={stringThickness[rowIndex] * 1.3}
+                                    $thickness={stringThickness[rowIndex] * 1.3}
                                 />
                                 {row.map((note: string, colIndex: number) => {
                                     if (colIndex >= maxFret) return null;
@@ -85,13 +85,13 @@ const Fretboard: React.FC<FretboardProps> = ({
                                     return (
                                         <Note
                                             key={colIndex + 1}
-                                            isActive={isActive}
-                                            isScaleNote={isScaleNote}
-                                            isRootNote={isRootNote}
-                                            selectedBlock={selectedBlock}
-                                            blockNumber={blockNumber}
-                                            fretWidths={normalizedFretWidths}
-                                            fretIndex={colIndex}
+                                            $isActive={isActive}
+                                            $isScaleNote={isScaleNote}
+                                            $isRootNote={isRootNote}
+                                            $selectedBlock={selectedBlock}
+                                            $blockNumber={blockNumber}
+                                            $fretWidths={normalizedFretWidths}
+                                            $fretIndex={colIndex}
                                         >
                                             <div>
                                                 {note.replace(/[0-9]/g, "")}

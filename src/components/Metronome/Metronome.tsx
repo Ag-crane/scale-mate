@@ -75,15 +75,15 @@ const Metronome: React.FC<MetronomeProps> = ({ bpm }) => {
     };
 
     return (
-        <Container backgroundImage={backgroundImage}>
+        <Container $backgroundImage={backgroundImage}>
             <ToggleSwitch>
                 <HiddenCheckbox
                     checked={isPlaying}
                     onChange={handleMetronomeToggle}
                 />
-                <Slider isPlaying={isPlaying} />
+                <Slider $isPlaying={isPlaying} />
             </ToggleSwitch>
-            <Pendulum isPlaying={isPlaying} tick={tick} bpm={bpm} />
+            <Pendulum $isPlaying={isPlaying} $tick={tick} $bpm={bpm} />
         </Container>
     );
 };

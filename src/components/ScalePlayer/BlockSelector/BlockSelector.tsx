@@ -17,7 +17,7 @@ const BlockSelector: React.FC<BlockSelectorProps> = ({
     return (
         <BlockSelectorContainer>
             <BlockButton
-                isSelected={selectedBlock === null}
+                $isSelected={selectedBlock === null}
                 onClick={() => setSelectedBlock(null)}
                 disabled={isPlaying}
             >
@@ -26,7 +26,7 @@ const BlockSelector: React.FC<BlockSelectorProps> = ({
             {availableBlocks.map((block) => (
                 <BlockButton
                     key={block}
-                    isSelected={selectedBlock === block}
+                    $isSelected={selectedBlock === block}
                     onClick={() => setSelectedBlock(block)}
                     disabled={isPlaying}
                 >

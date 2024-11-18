@@ -49,10 +49,10 @@ const OpenNote = styled.div`
     border-right: none;
 `;
 
-const GuitarString = styled.div<{ thickness: number }>`
+const GuitarString = styled.div<{ $thickness: number }>`
     position: absolute;
     width: 100%;
-    height: ${({ thickness }) => thickness}px;
+    height: ${({ $thickness }) => $thickness}px;
     background-color: #a9a9a9;
     left: 0;
     top: 50%;
@@ -65,19 +65,18 @@ const NoteRow = styled.div`
 `;
 
 const Note = styled.div<{
-    isActive?: boolean;
-    isOpenNote?: boolean;
-    isScaleNote?: boolean;
-    isRootNote?: boolean;
-    selectedBlock: number | null;
-    blockNumber: (number | null)[];
-    fretWidths: number[];
-    fretIndex: number;
+    $isActive?: boolean;
+    $isScaleNote?: boolean;
+    $isRootNote?: boolean;
+    $selectedBlock: number | null;
+    $blockNumber: (number | null)[];
+    $fretWidths: number[];
+    $fretIndex: number;
 }>`
     box-sizing: border-box;
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: ${({ fretWidths, fretIndex }) => fretWidths[fretIndex] || 6}%;
+    flex-basis: ${({ $fretWidths, $fretIndex }) => $fretWidths[$fretIndex] || 6}%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,16 +89,16 @@ const Note = styled.div<{
     }
 
     & > div {
-        background-color: ${({ isActive, isScaleNote, isRootNote }) =>
-            isActive
+        background-color: ${({ $isActive, $isScaleNote, $isRootNote }) =>
+            $isActive
                 ? "#ff0"
-                : isRootNote
+                : $isRootNote
                 ? "#ff6347"
-                : isScaleNote
+                : $isScaleNote
                 ? "#fff"
                 : "#eee"};
-        color: ${({ isActive, isRootNote }) =>
-            isActive ? "#000" : isRootNote ? "#fff" : "#333"};
+        color: ${({ $isActive, $isRootNote }) =>
+            $isActive ? "#000" : $isRootNote ? "#fff" : "#333"};
         border-radius: 50%;
         width: 28px;
         height: 28px;
@@ -108,10 +107,10 @@ const Note = styled.div<{
         display: flex;
         justify-content: center;
         align-items: center;
-        opacity: ${({ isScaleNote, blockNumber, selectedBlock }) => {
-            if (!isScaleNote) return 0; // 스케일에 속하지 않는 노트는 보이지 않음
-            if (selectedBlock === null) return 1; // 선택된 블록이 없으면
-            return blockNumber.includes(selectedBlock) ? 1 : 0.2; // 선택된 블록에 속하는지 확인
+        opacity: ${({ $isScaleNote, $blockNumber, $selectedBlock }) => {
+            if (!$isScaleNote) return 0; // 스케일에 속하지 않는 노트는 보이지 않음
+            if ($selectedBlock === null) return 1; // 선택된 블록이 없으면
+            return $blockNumber.includes($selectedBlock) ? 1 : 0.2; // 선택된 블록에 속하는지 확인
         }};
         z-index: 3;
     }

@@ -6,7 +6,7 @@ const swingLeftRight = keyframes`
   100% { transform: rotate(20deg); }
 `;
 
-const Container = styled.div<{ backgroundImage: string }>`
+const Container = styled.div<{ $backgroundImage: string }>`
     position: relative;
     width: 100%;
     max-width: 500px;
@@ -16,7 +16,7 @@ const Container = styled.div<{ backgroundImage: string }>`
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-image: url(${({ backgroundImage }) => backgroundImage});
+    background-image: url(${({ $backgroundImage }) => $backgroundImage});
     background-size: 200px 220px;
     background-position: center;
     background-repeat: no-repeat;
@@ -37,18 +37,18 @@ const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })`
     height: 0;
 `;
 
-const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
+const Pendulum = styled.div<{ $isPlaying: boolean; $tick: number; $bpm: number }>`
     width: 8px;
     height: 120px;
-    background-color: ${({ isPlaying }) => (isPlaying ? "#FF6347" : "#ddd")};
+    background-color: ${({ $isPlaying }) => ($isPlaying ? "#FF6347" : "#ddd")};
     transform-origin: bottom center;
     border-radius: 4px;
     margin-bottom: 40px;
 
-    ${({ isPlaying, bpm }) =>
-        isPlaying
+    ${({ $isPlaying, $bpm }) =>
+        $isPlaying
             ? css`
-                  animation: ${swingLeftRight} ${120 / bpm}s infinite
+                  animation: ${swingLeftRight} ${120 / $bpm}s infinite
                       ease-in-out;
               `
             : css`
@@ -57,14 +57,14 @@ const Pendulum = styled.div<{ isPlaying: boolean; tick: number; bpm: number }>`
     transition: transform 0.5s ease-in-out;
 `;
 
-const Slider = styled.span<{ isPlaying: boolean }>`
+const Slider = styled.span<{ $isPlaying: boolean }>`
     position: absolute;
     cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: ${({ isPlaying }) => (isPlaying ? "#FF6347" : "#ccc")};
+    background-color: ${({ $isPlaying }) => ($isPlaying ? "#FF6347" : "#ccc")};
     transition: 0.4s;
     border-radius: 34px;
 
@@ -73,7 +73,7 @@ const Slider = styled.span<{ isPlaying: boolean }>`
         content: "";
         height: 26px;
         width: 26px;
-        left: ${({ isPlaying }) => (isPlaying ? "30px" : "4px")};
+        left: ${({ $isPlaying }) => ($isPlaying ? "30px" : "4px")};
         bottom: 4px;
         background-color: white;
         transition: 0.4s;
