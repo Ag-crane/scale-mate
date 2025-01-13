@@ -2,14 +2,7 @@ import React, { useEffect, useState } from "react";
 import SettingBoard from "./components/SettingBoard/SettingBoard";
 import ScalePlayer from "./components/ScalePlayer/ScalePlayer";
 import Metronome from "./components/Metronome/Metronome";
-import {
-    Container,
-    Header,
-    MainContainer,
-    MetronomeContainer,
-    ScalePlayerContainer,
-    SettingBoardContainer,
-} from "./App.styles";
+import { Header, LayoutContainer, MainContent, Sidebar } from "./App.styles";
 import { start } from "tone";
 import { initChannelTalk } from "./utils/initChannelTalk";
 
@@ -57,35 +50,33 @@ const App: React.FC = () => {
         initChannelTalk();
 
         return () => {
-          if (window.ChannelIO) {
-            window.ChannelIO('shutdown');
-          }
+            if (window.ChannelIO) {
+                window.ChannelIO("shutdown");
+            }
         };
     }, []);
 
     return (
-        <Container>
+        <>
             <Header>Scale Mate</Header>
-            <MainContainer>
-                <SettingBoardContainer>
+            <LayoutContainer>
+                <Sidebar>
                     <SettingBoard
                         settings={settings}
                         onSettingsChange={handleSettingsChange}
                         onSave={handleSave}
                     />
-                </SettingBoardContainer>
-                <MetronomeContainer>
                     <Metronome bpm={settings.bpm} />
-                </MetronomeContainer>
-            </MainContainer>
-            <ScalePlayerContainer>
-                <ScalePlayer
-                    settings={settings}
-                    currentPlayingNotes={currentPlayingNotes}
-                    setCurrentPlayingNotes={setCurrentPlayingNotes}
-                />
-            </ScalePlayerContainer>
-        </Container>
+                </Sidebar>
+                <MainContent>
+                    <ScalePlayer
+                        settings={settings}
+                        currentPlayingNotes={currentPlayingNotes}
+                        setCurrentPlayingNotes={setCurrentPlayingNotes}
+                    />
+                </MainContent>
+            </LayoutContainer>
+        </>
     );
 };
 

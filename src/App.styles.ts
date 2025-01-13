@@ -1,76 +1,56 @@
 import styled from "styled-components";
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f0f2f5;
-    padding: 20px;
-    padding-top: 60px; /* Header의 높이만큼 패딩 추가 */
-`;
-
-const MainContainer = styled.div`
-    display: flex;
-    justify-content: space-between; 
-    align-items: stretch; /* 두 컴포넌트의 높이를 동일하게 맞춤 */
-    width: 100%;
-    max-width: 1200px;
-    margin-top: 20px;
-`;
-
-const SettingBoardContainer = styled.div`
-    flex: 1;
-    margin-right: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #ffffff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-`;
-
-const MetronomeContainer = styled.div`
-    flex: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #ffffff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-`;
-
-const ScalePlayerContainer = styled.div`
-    margin-top: 20px;
-    width: 100%;
-    max-width: 1200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #ffffff;
-    padding: 20px 0;
-`;
-
-const Header = styled.div`
-    background-color: #282c34;
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-    width: 100%;
+const Header = styled.header`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    width: 100%;
+    height: 80px;
+    background-color: #282c34;
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
 `;
 
-export { Container, SettingBoardContainer, MainContainer, MetronomeContainer, ScalePlayerContainer, Header };
+const LayoutContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    padding-top: 80px; /* 내부 컨텐츠가 헤더 아래쪽에서 시작하도록 */
+`;
+
+const Sidebar = styled.aside`
+    width: 280px;
+    min-width: 240px;
+    background-color: #fafafa;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* 스크롤이 생기면 사이드바 내부만 스크롤되도록 할 수도 있음 */
+`;
+
+// 메인 컨텐츠: 프렛보드를 크게 차지
+const MainContent = styled.main`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden; /* 필요에 따라 스크롤 설정 */
+    overflow-y: auto; /* 필요에 따라 스크롤 설정 */
+
+    /* 예시: 백그라운드 컬러 조정 */
+    background-color: #f4f4f4;
+`;
+
+export {
+    Header,
+    LayoutContainer,
+    MainContent,
+    Sidebar
+};

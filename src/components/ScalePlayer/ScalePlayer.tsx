@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, ButtonContainer, Container } from "./ScalePlayer.styles";
+import {
+    BlockSelectorContainer,
+    BottomControls,
+    Button,
+    ButtonContainer,
+    Container,
+} from "./ScalePlayer.styles";
 import {
     PiPlayFill,
     PiStopFill,
@@ -75,32 +81,6 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
 
     return (
         <Container>
-            <ButtonContainer>
-                <Button onClick={togglePlayStop}>
-                    {isPlaying ? (
-                        <PiStopFill size={20} />
-                    ) : (
-                        <PiPlayFill size={20} />
-                    )}
-                </Button>
-                <Button onClick={togglePlaybackMode}>
-                    {isRepeat ? (
-                        <PiRepeatBold size={22} />
-                    ) : (
-                        <PiRepeatOnceBold size={22} />
-                    )}
-                </Button>
-                <VolumeControl
-                    initialVolume={synthVolume}
-                    onVolumeChange={handleVolumeChange}
-                />
-            </ButtonContainer>
-            <BlockSelector
-                selectedBlock={selectedBlock}
-                setSelectedBlock={setSelectedBlock}
-                availableBlocks={blockRanges.map((_, i) => i + 1)}
-                isPlaying={isPlaying}
-            />
             <Fretboard
                 currentPlayingNotes={currentPlayingNotes}
                 scaleNotes={getScaleNotesForSettings(
@@ -112,6 +92,36 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
                 blockNumbers={blockNumbers}
                 scale={settings.scale}
             />
+            <BottomControls>
+                <BlockSelectorContainer>
+                    <BlockSelector
+                        selectedBlock={selectedBlock}
+                        setSelectedBlock={setSelectedBlock}
+                        availableBlocks={blockRanges.map((_, i) => i + 1)}
+                        isPlaying={isPlaying}
+                    />
+                </BlockSelectorContainer>
+                <ButtonContainer>
+                    <Button onClick={togglePlayStop}>
+                        {isPlaying ? (
+                            <PiStopFill size={20} />
+                        ) : (
+                            <PiPlayFill size={20} />
+                        )}
+                    </Button>
+                    <Button onClick={togglePlaybackMode}>
+                        {isRepeat ? (
+                            <PiRepeatBold size={22} />
+                        ) : (
+                            <PiRepeatOnceBold size={22} />
+                        )}
+                    </Button>
+                    <VolumeControl
+                        initialVolume={synthVolume}
+                        onVolumeChange={handleVolumeChange}
+                    />
+                </ButtonContainer>
+            </BottomControls>
         </Container>
     );
 };
