@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react";
 import SettingBoard from "./components/SettingBoard/SettingBoard";
 import ScalePlayer from "./components/ScalePlayer/ScalePlayer";
 import Metronome from "./components/Metronome/Metronome";
-import { Header, LayoutContainer, MainContent, Sidebar } from "./App.styles";
+import {
+    Header,
+    LayoutContainer,
+    MainContent,
+    Sidebar,
+    SidebarToggleButton,
+} from "./App.styles";
 import { start } from "tone";
 import { initChannelTalk } from "./utils/initChannelTalk";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const App: React.FC = () => {
     const [settings, setSettings] = useState({
@@ -56,19 +63,31 @@ const App: React.FC = () => {
         };
     }, []);
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen((prev) => !prev);
+    };
+
     return (
         <>
             <Header>Scale Mate</Header>
             <LayoutContainer>
-                <Sidebar>
+                <Sidebar isOpen={isSidebarOpen}>
                     <SettingBoard
                         settings={settings}
                         onSettingsChange={handleSettingsChange}
                         onSave={handleSave}
                     />
                     <Metronome bpm={settings.bpm} />
+                    <SidebarToggleButton
+                        isOpen={isSidebarOpen}
+                        onClick={toggleSidebar}
+                    >
+                        {isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
+                    </SidebarToggleButton>
                 </Sidebar>
-                <MainContent>
+                <MainContent isSidebarOpen={isSidebarOpen}>
                     <ScalePlayer
                         settings={settings}
                         currentPlayingNotes={currentPlayingNotes}
