@@ -5,10 +5,6 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
 `;
-const FretboardContainer = styled.div`
-    width: 100%;
-    margin-bottom: 20px;
-`;
 
 const BottomControls = styled.div`
     display: flex;
@@ -17,10 +13,13 @@ const BottomControls = styled.div`
     width: 100%;
     padding: 10px 0;
     gap: 20px;
+    margin-top: 20px;
+    margin-right: 8px;
 `;
 
 const BlockSelectorContainer = styled.div`
-    flex: 1;
+    display: flex;
+    margin-left: 44px;
 `;
 
 const ButtonContainer = styled.div`
@@ -39,7 +38,6 @@ const Button = styled.button`
 
 export {
     Container,
-    FretboardContainer,
     BottomControls,
     BlockSelectorContainer,
     ButtonContainer,

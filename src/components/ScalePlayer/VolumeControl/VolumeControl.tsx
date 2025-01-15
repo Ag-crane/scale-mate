@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { VolumeControlContainer, VolumeIcon, VolumeSlider } from "./VolumeControl.styles";
+import {
+    VolumeButton,
+    VolumeControlContainer,
+    VolumeSlider,
+} from "./VolumeControl.styles";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 
 interface VolumeControlProps {
@@ -7,7 +11,10 @@ interface VolumeControlProps {
     onVolumeChange: (volume: number) => void;
 }
 
-const VolumeControl: React.FC<VolumeControlProps> = ({ initialVolume = 0, onVolumeChange }) => {
+const VolumeControl: React.FC<VolumeControlProps> = ({
+    initialVolume = 0,
+    onVolumeChange,
+}) => {
     const [volume, setVolume] = useState(initialVolume);
     const [isMuted, setIsMuted] = useState(false);
 
@@ -24,9 +31,13 @@ const VolumeControl: React.FC<VolumeControlProps> = ({ initialVolume = 0, onVolu
 
     return (
         <VolumeControlContainer>
-            <VolumeIcon onClick={toggleMute}>
-                {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-            </VolumeIcon>
+            <VolumeButton onClick={toggleMute}>
+                {isMuted ? (
+                    <FaVolumeMute size={22} />
+                ) : (
+                    <FaVolumeUp size={22} />
+                )}
+            </VolumeButton>
             <VolumeSlider
                 min="-24"
                 max="0"
