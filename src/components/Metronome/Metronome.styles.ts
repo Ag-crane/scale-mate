@@ -15,7 +15,7 @@ const Container = styled.div<{ $backgroundImage: string }>`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    margin: 20px;
     background-image: url(${({ $backgroundImage }) => $backgroundImage});
     background-size: 200px 220px;
     background-position: center;
@@ -24,7 +24,7 @@ const Container = styled.div<{ $backgroundImage: string }>`
 
 const ToggleSwitch = styled.label`
     position: absolute;
-    bottom: 42px;
+    bottom: 21px;
     display: inline-block;
     width: 72px;
     height: 30px;

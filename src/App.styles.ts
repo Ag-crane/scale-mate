@@ -27,9 +27,9 @@ const LayoutContainer = styled.div`
 `;
 
 const SidebarToggleButton = styled.button<{ isOpen: boolean }>`
-    position: absolute; // 부모인 Sidebar의 우측 끝 중앙에 위치
+    position: absolute;
     top: 50%;
-    right: -20px; // 사이드바 우측에서 살짝 떨어짐
+    right: -20px;
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
@@ -57,16 +57,13 @@ const Sidebar = styled.aside<{ isOpen: boolean }>`
     position: fixed;
     top: 80px; // 헤더 높이
     left: 0;
-    width: 280px;
+    width: 300px;
     height: calc(100vh - 80px);
     background-color: #fafafa;
     border-right: 1px solid #ddd;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
-    gap: 20px;
 
     transition: transform 0.3s ease;
     transform: ${({ isOpen }) =>
