@@ -24,11 +24,10 @@ const Container = styled.div<{ $backgroundImage: string }>`
 
 const ToggleSwitch = styled.label`
     position: absolute;
-    top: 20px;
-    right: 40px;
+    bottom: 42px;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 72px;
+    height: 30px;
 `;
 
 const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })`
@@ -71,13 +70,25 @@ const Slider = styled.span<{ $isPlaying: boolean }>`
     &::before {
         position: absolute;
         content: "";
-        height: 26px;
-        width: 26px;
-        left: ${({ $isPlaying }) => ($isPlaying ? "30px" : "4px")};
+        height: 22px;
+        width: 22px;
+        left: ${({ $isPlaying }) => ($isPlaying ? "44px" : "6px")};
         bottom: 4px;
         background-color: white;
         transition: 0.4s;
         border-radius: 50%;
+    }
+
+    &::after {
+        content: '${({ $isPlaying }) => ($isPlaying ? "ON" : "OFF")}';
+        position: absolute;
+        top: 50%;
+        left: ${({ $isPlaying }) => ($isPlaying ? "14px" : "40px")};
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        pointer-events: none; 
     }
 `;
 

@@ -76,6 +76,7 @@ const Metronome: React.FC<MetronomeProps> = ({ bpm }) => {
 
     return (
         <Container $backgroundImage={backgroundImage}>
+            <Pendulum $isPlaying={isPlaying} $tick={tick} $bpm={bpm} />
             <ToggleSwitch>
                 <HiddenCheckbox
                     checked={isPlaying}
@@ -83,7 +84,6 @@ const Metronome: React.FC<MetronomeProps> = ({ bpm }) => {
                 />
                 <Slider $isPlaying={isPlaying} />
             </ToggleSwitch>
-            <Pendulum $isPlaying={isPlaying} $tick={tick} $bpm={bpm} />
         </Container>
     );
 };
