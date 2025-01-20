@@ -16,10 +16,14 @@ const Header = styled.header`
 `;
 
 const LayoutContainer = styled.div`
+    position: absolute;
+    top: 80px; // 헤더 높이만큼 내려서 시작
+    width: 100%;
+    height: calc(100vh - 80px);
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
-    padding-top: 80px; /* 내부 컨텐츠가 헤더 아래쪽에서 시작하도록 */
+    align-items: center;
+    justify-content: center;
 `;
 
 const SidebarToggleButton = styled.button<{ isOpen: boolean }>`
@@ -42,7 +46,8 @@ const SidebarToggleButton = styled.button<{ isOpen: boolean }>`
         background-color: #bbb;
     }
 
-    svg { // 화살표 아이콘
+    svg {
+        // 화살표 아이콘
         font-size: 18px;
         color: #333;
     }
@@ -57,6 +62,12 @@ const Sidebar = styled.aside<{ isOpen: boolean }>`
     background-color: #fafafa;
     border-right: 1px solid #ddd;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 20px;
+
     transition: transform 0.3s ease;
     transform: ${({ isOpen }) =>
         isOpen ? "translateX(0)" : "translateX(-100%)"};
@@ -65,7 +76,7 @@ const Sidebar = styled.aside<{ isOpen: boolean }>`
 const MainContent = styled.main<{ isSidebarOpen: boolean }>`
     flex: 1;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     justify-content: center;
     padding: 20px;
