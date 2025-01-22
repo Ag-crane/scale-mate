@@ -29,8 +29,9 @@ const LayoutContainer = styled.div`
 const SidebarToggleButton = styled.button<{ isOpen: boolean }>`
     position: absolute;
     top: 50%;
-    right: -20px;
-    transform: translateY(-50%);
+    transform: ${({ isOpen }) =>
+        isOpen ? "translate(150px, -50%)" : "translate(180px, -50%)"};
+        
     width: 40px;
     height: 40px;
     border: none;
