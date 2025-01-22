@@ -16,9 +16,9 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 const App: React.FC = () => {
     const [settings, setSettings] = useState({
         bpm: 60,
-        scale: "Chromatic",
-        key: "",
-        subdivision: 1,
+        scale: "Major",
+        key: "C",
+        subdivision: 4,
     });
     const [currentPlayingNotes, setCurrentPlayingNotes] = useState<boolean[][]>(
         Array(6)
