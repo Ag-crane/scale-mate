@@ -74,7 +74,6 @@ const Sidebar = styled.aside<{ isOpen: boolean }>`
 const MainContent = styled.main<{ isSidebarOpen: boolean }>`
     flex: 1;
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -83,7 +82,6 @@ const MainContent = styled.main<{ isSidebarOpen: boolean }>`
     overflow-y: auto;
     margin-left: ${({ isSidebarOpen }) => (isSidebarOpen ? "280px" : "0")};
     transition: margin-left 0.3s ease;
-    background-color: #f4f4f4;
 `;
 
 export { Header, LayoutContainer, MainContent, SidebarToggleButton, Sidebar };
