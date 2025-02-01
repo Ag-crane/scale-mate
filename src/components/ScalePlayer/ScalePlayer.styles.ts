@@ -5,6 +5,23 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
 `;
+
+const BottomControls = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    gap: 20px;
+    margin-top: 20px;
+    margin-right: 8px;
+`;
+
+const BlockSelectorContainer = styled.div`
+    display: flex;
+    margin-left: 44px;
+`;
+
 const ButtonContainer = styled.div`
     display: flex;
     align-items: center;
@@ -19,4 +36,10 @@ const Button = styled.button`
     border-radius: 5px;
 `;
 
-export { Container, ButtonContainer, Button };
+export {
+    Container,
+    BottomControls,
+    BlockSelectorContainer,
+    ButtonContainer,
+    Button,
+};

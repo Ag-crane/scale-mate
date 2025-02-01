@@ -44,8 +44,15 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
 
     const handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        setTempSettings({ ...tempSettings, bpm: Number(value) || 0 });
+        setTempSettings({ ...tempSettings, bpm: Number(value)});
     };
+
+    const handleBpmBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        let value = Number(e.target.value);
+        if (value < 30) value = 30;
+        if (value > 240) value = 240;
+        setTempSettings({ ...tempSettings, bpm: value });
+      };
 
     const handleSubdivisionChange = (
         event: React.ChangeEvent<HTMLSelectElement>
@@ -103,7 +110,8 @@ const SettingBoard: React.FC<SettingBoardProps> = ({
                     id="bpm"
                     value={tempSettings.bpm}
                     onChange={handleBpmChange}
-                    min="40"
+                    onBlur={handleBpmBlur}
+                    min="30"
                     max="240"
                 />
             </div>

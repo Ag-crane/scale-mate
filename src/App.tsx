@@ -3,22 +3,22 @@ import SettingBoard from "./components/SettingBoard/SettingBoard";
 import ScalePlayer from "./components/ScalePlayer/ScalePlayer";
 import Metronome from "./components/Metronome/Metronome";
 import {
-    Container,
     Header,
-    MainContainer,
-    MetronomeContainer,
-    ScalePlayerContainer,
-    SettingBoardContainer,
+    LayoutContainer,
+    MainContent,
+    Sidebar,
+    SidebarToggleButton,
 } from "./App.styles";
 import { start } from "tone";
 import { initChannelTalk } from "./utils/initChannelTalk";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const App: React.FC = () => {
     const [settings, setSettings] = useState({
         bpm: 60,
-        scale: "Chromatic",
-        key: "",
-        subdivision: 1,
+        scale: "Major",
+        key: "C",
+        subdivision: 4,
     });
     const [currentPlayingNotes, setCurrentPlayingNotes] = useState<boolean[][]>(
         Array(6)
@@ -57,35 +57,45 @@ const App: React.FC = () => {
         initChannelTalk();
 
         return () => {
-          if (window.ChannelIO) {
-            window.ChannelIO('shutdown');
-          }
+            if (window.ChannelIO) {
+                window.ChannelIO("shutdown");
+            }
         };
     }, []);
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen((prev) => !prev);
+    };
+
     return (
-        <Container>
+        <>
             <Header>Scale Mate</Header>
-            <MainContainer>
-                <SettingBoardContainer>
+            <LayoutContainer>
+                <Sidebar isOpen={isSidebarOpen}>
                     <SettingBoard
                         settings={settings}
                         onSettingsChange={handleSettingsChange}
                         onSave={handleSave}
                     />
-                </SettingBoardContainer>
-                <MetronomeContainer>
                     <Metronome bpm={settings.bpm} />
-                </MetronomeContainer>
-            </MainContainer>
-            <ScalePlayerContainer>
-                <ScalePlayer
-                    settings={settings}
-                    currentPlayingNotes={currentPlayingNotes}
-                    setCurrentPlayingNotes={setCurrentPlayingNotes}
-                />
-            </ScalePlayerContainer>
-        </Container>
+                    <SidebarToggleButton
+                        isOpen={isSidebarOpen}
+                        onClick={toggleSidebar}
+                    >
+                        {isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
+                    </SidebarToggleButton>
+                </Sidebar>
+                <MainContent isSidebarOpen={isSidebarOpen}>
+                    <ScalePlayer
+                        settings={settings}
+                        currentPlayingNotes={currentPlayingNotes}
+                        setCurrentPlayingNotes={setCurrentPlayingNotes}
+                    />
+                </MainContent>
+            </LayoutContainer>
+        </>
     );
 };
 
