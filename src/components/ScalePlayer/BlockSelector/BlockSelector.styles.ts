@@ -9,7 +9,8 @@ const BlockSelectorContainer = styled.div`
 
 const BlockButton = styled.button<{ $isSelected: boolean }>`
     padding: 10px 20px;
-    background-color: ${({ $isSelected }) => ($isSelected ? "#4a90e2" : "#ccc")};
+    background-color: ${({ $isSelected }) =>
+        $isSelected ? "#2e3b48" : "#ccc"};
     color: ${({ $isSelected }) => ($isSelected ? "#fff" : "#333")};
     border: none;
     border-radius: 5px;
@@ -20,7 +21,7 @@ const BlockButton = styled.button<{ $isSelected: boolean }>`
 
     &:hover {
         background-color: ${({ $isSelected }) =>
-            $isSelected ? "#357ABD" : "#bbb"};
+            $isSelected ? "#2e3b48" : "#bbb"};
         transform: translateY(-2px);
     }
 

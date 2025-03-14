@@ -6,7 +6,7 @@ const Header = styled.header`
     left: 0;
     width: 100%;
     height: 80px;
-    background-color: #282c34;
+    background-color: #2e3441;
     color: white;
     font-size: 1.5rem;
     display: flex;
@@ -24,6 +24,7 @@ const LayoutContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    background-color: #f6f8fa;
 `;
 
 const SidebarToggleButton = styled.button<{ isOpen: boolean }>`
@@ -31,7 +32,7 @@ const SidebarToggleButton = styled.button<{ isOpen: boolean }>`
     top: 50%;
     transform: ${({ isOpen }) =>
         isOpen ? "translate(150px, -50%)" : "translate(180px, -50%)"};
-        
+
     width: 40px;
     height: 40px;
     border: none;
