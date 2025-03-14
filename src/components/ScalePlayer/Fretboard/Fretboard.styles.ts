@@ -13,9 +13,9 @@ const FretboardContainer = styled.div`
     width: 1000px;
     height: 240px;
     padding: 10px 0px;
-    background-color: #6a4e42;
+    background-color: #535a61;
     border-radius: 5px;
-    border-left: 15px solid #dcb47f;
+    border-left: 15px solid #e3d5b8;
 `;
 
 const OpenNotesContainer = styled.div`
@@ -76,7 +76,8 @@ const Note = styled.div<{
     box-sizing: border-box;
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: ${({ $fretWidths, $fretIndex }) => $fretWidths[$fretIndex] || 6}%;
+    flex-basis: ${({ $fretWidths, $fretIndex }) =>
+        $fretWidths[$fretIndex] || 6}%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,11 +92,11 @@ const Note = styled.div<{
     & > div {
         background-color: ${({ $isActive, $isScaleNote, $isRootNote }) =>
             $isActive
-                ? "#ff0"
+                ? "#F2E27E"
                 : $isRootNote
-                ? "#ff6347"
+                ? "#FF7F7F"
                 : $isScaleNote
-                ? "#fff"
+                ? "aliceblue"
                 : "#eee"};
         color: ${({ $isActive, $isRootNote }) =>
             $isActive ? "#000" : $isRootNote ? "#fff" : "#333"};
