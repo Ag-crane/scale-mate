@@ -86,13 +86,10 @@ const MainContent = styled.main<{ isSidebarOpen: boolean }>`
     transition: margin-left 0.3s ease;
 `;
 
-const ScaleInfoWrapper = styled.div``;
-
 export {
     Header,
     LayoutContainer,
     MainContent,
     SidebarToggleButton,
     Sidebar,
-    ScaleInfoWrapper,
 };
