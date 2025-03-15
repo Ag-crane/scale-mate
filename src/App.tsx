@@ -8,6 +8,7 @@ import {
     MainContent,
     Sidebar,
     SidebarToggleButton,
+    ScaleInfoWrapper,
 } from "./App.styles";
 import { start } from "tone";
 import { initChannelTalk } from "./utils/initChannelTalk";
@@ -88,6 +89,12 @@ const App: React.FC = () => {
                     </SidebarToggleButton>
                 </Sidebar>
                 <MainContent isSidebarOpen={isSidebarOpen}>
+                    <ScaleInfoWrapper>
+                        <h3>
+                            {settings.key} {settings.scale} Scale
+                        </h3>
+                        <p>Notes</p>
+                    </ScaleInfoWrapper>
                     <ScalePlayer
                         settings={settings}
                         currentPlayingNotes={currentPlayingNotes}
