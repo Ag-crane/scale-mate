@@ -10,12 +10,12 @@ const scalePatterns: Record<string, number[]> = {
 };
 
 // 특정 키의 루트에서 스케일을 생성하는 함수
-const generateScaleNotes = (root: string, pattern: number[]): string[] => {
+export const generateScaleNotes = (root: string, scale: string): string[] => {
     const chromaticScale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     let startIndex = chromaticScale.indexOf(root || "C");
     const notes: string[] = [];
 
-    pattern.forEach(interval => {
+    scalePatterns[scale].forEach(interval => {
         notes.push(chromaticScale[startIndex]);
         startIndex = (startIndex + interval) % chromaticScale.length;
     });
@@ -34,14 +34,9 @@ const filterFretboardForScale = (fretboard: string[][], scaleNotes: string[]): (
 };
 
 // 설정에 따라 스케일을 생성하고, 결과물(프렛보드 형식의 노트 배열)을 반환하는 함수
-export const getScaleNotesForSettings = (scale: string, key: string): (string | null)[][] => {
-    const scalePattern = scalePatterns[scale];
-    if (scalePattern) {
-        const scaleNotes = generateScaleNotes(key, scalePattern);
-        return filterFretboardForScale(fretboard, scaleNotes);
-    }
-
-    return Array(6).fill(null).map(() => Array(12).fill(null)); // 유효한 스케일이 없을 때 빈 2차원 배열 반환
+export const getScaleNotesForSettings = (key: string, scale: string): (string | null)[][] => {
+	const scaleNotes = generateScaleNotes(key, scale);
+	return filterFretboardForScale(fretboard, scaleNotes);
 };
 
 // 특정 스케일을 지정된 블록 범위에 맞춰 나누는 함수

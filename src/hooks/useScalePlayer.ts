@@ -73,8 +73,8 @@ export const useScalePlayer = (
         await Tone.start();
 
         const scaleFretboard = getScaleNotesForSettings(
-            settings.scale,
-            settings.key
+            settings.key,
+			settings.scale
         );
         const blockRangesEntry = scaleBlockRanges[settings.scale];
 
