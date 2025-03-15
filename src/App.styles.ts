@@ -75,6 +75,7 @@ const Sidebar = styled.aside<{ isOpen: boolean }>`
 const MainContent = styled.main<{ isSidebarOpen: boolean }>`
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -85,4 +86,13 @@ const MainContent = styled.main<{ isSidebarOpen: boolean }>`
     transition: margin-left 0.3s ease;
 `;
 
-export { Header, LayoutContainer, MainContent, SidebarToggleButton, Sidebar };
+const ScaleInfoWrapper = styled.div``;
+
+export {
+    Header,
+    LayoutContainer,
+    MainContent,
+    SidebarToggleButton,
+    Sidebar,
+    ScaleInfoWrapper,
+};
