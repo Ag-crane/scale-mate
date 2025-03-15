@@ -84,8 +84,8 @@ const ScalePlayer: React.FC<ScalePlayerProps> = ({
             <Fretboard
                 currentPlayingNotes={currentPlayingNotes}
                 scaleNotes={getScaleNotesForSettings(
-                    settings.scale,
-                    settings.key
+                    settings.key,
+                    settings.scale
                 )}
                 rootNote={settings.key}
                 selectedBlock={selectedBlock}
