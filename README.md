@@ -3,14 +3,14 @@
 
 <br/>
 
-## 데모
-![ScaleMate_Demo](https://github.com/user-attachments/assets/cd9d1a19-a492-49ca-960b-398bd1441dd4)
+## 시연 영상
+![Demo](https://github.com/user-attachments/assets/4d6fd7d5-cb61-45fb-82e0-64ef0ac73f40)
 
 <br/>
 
 ## 개요
-기타 연주자들이 다양한 스케일을 연습할 수 있도록 돕는다.   
-가상 프렛보드와 메트로놈을 구현하여, 사용자 설정(스케일, key, bpm)에 따른 스케일 연주 시뮬레이션을 제공한다.
+기타 연주자들이 다양한 스케일을 연습할 수 있도록 돕는다.  
+웹 화면에 가상 프렛보드와 메트로놈을 구현하여, 사용자 설정(scale, key, bpm 등)에 따른 스케일 연주 시뮬레이션을 제공한다.
 
 <br/>
 
